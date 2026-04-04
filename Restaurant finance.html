@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>مركز المال | إدارة مالية للمطاعم</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0c10;
+    --surface: #111318;
+    --surface2: #181c23;
+    --border: #1e2530;
+    --gold: #c9a84c;
+    --gold-light: #e8c97a;
+    --gold-dim: rgba(201,168,76,0.12);
+    --green: #2ecc71;
+    --red: #e74c3c;
+    --blue: #3498db;
+    --text: #e8e6e0;
+    --muted: #7a8090;
+    --accent: #c9a84c;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Cairo', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Background texture */
+  body::before {
+    content:'';
+    position:fixed; inset:0;
+    background:
+      radial-gradient(ellipse 60% 40% at 80% 20%, rgba(201,168,76,0.06) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 60% at 10% 80%, rgba(52,152,219,0.04) 0%, transparent 60%);
+    pointer-events:none; z-index:0;
+  }
+
+  /* ---- HEADER ---- */
+  header {
+    position: sticky; top:0; z-index:100;
+    background: rgba(10,12,16,0.92);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 28px;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 64px;
+  }
+
+  .logo {
+    display: flex; align-items: center; gap: 12px;
+  }
+  .logo-icon {
+    width: 36px; height: 36px;
+    background: linear-gradient(135deg, var(--gold), #8b6914);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+  }
+  .logo-text { font-size: 18px; font-weight: 700; color: var(--gold); letter-spacing: .5px; }
+  .logo-sub { font-size: 11px; color: var(--muted); font-weight: 400; }
+
+  .header-date {
+    font-family: 'Tajawal', sans-serif;
+    font-size: 13px; color: var(--muted);
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 6px 14px;
+  }
+  .header-date span { color: var(--gold); font-weight: 600; }
+
+  /* ---- LAYOUT ---- */
+  .wrapper { max-width: 1200px; margin: 0 auto; padding: 28px 20px; position:relative; z-index:1; }
+
+  /* ---- SECTION TITLE ---- */
+  .section-title {
+    font-size: 12px; font-weight: 600; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--gold);
+    margin-bottom: 16px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .section-title::after {
+    content:''; flex:1; height:1px;
+    background: linear-gradient(90deg, var(--gold-dim), transparent);
+  }
+
+  /* ---- KPI CARDS ---- */
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 14px;
+    margin-bottom: 28px;
+  }
+
+  .kpi-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 20px 22px;
+    position: relative; overflow: hidden;
+    cursor: pointer;
+    transition: transform .2s, border-color .2s;
+  }
+  .kpi-card:hover { transform: translateY(-3px); border-color: var(--gold); }
+  .kpi-card::before {
+    content:''; position:absolute; top:0; right:0;
+    width:80px; height:80px;
+    background: radial-gradient(circle, var(--gold-dim) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+
+  .kpi-label {
+    font-size: 11px; color: var(--muted); font-weight: 500;
+    text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px;
+  }
+  .kpi-value {
+    font-size: 26px; font-weight: 900; color: var(--text);
+    line-height: 1; margin-bottom: 6px;
+  }
+  .kpi-value .currency { font-size: 14px; color: var(--muted); font-weight: 400; margin-right: 3px; }
+  .kpi-badge {
+    display: inline-flex; align-items: center; gap: 4px;
+    font-size: 11px; font-weight: 600; border-radius: 6px; padding: 2px 8px;
+  }
+  .badge-up { background: rgba(46,204,113,.15); color: var(--green); }
+  .badge-down { background: rgba(231,76,60,.15); color: var(--red); }
+  .badge-warn { background: rgba(201,168,76,.15); color: var(--gold); }
+
+  .kpi-icon {
+    position: absolute; bottom: 18px; left: 18px;
+    font-size: 28px; opacity: .18;
+  }
+
+  /* ---- TWO COLS ---- */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-bottom: 28px; }
+  @media(max-width:760px){ .two-col { grid-template-columns: 1fr; } }
+
+  /* ---- PANEL ---- */
+  .panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 22px;
+  }
+  .panel-title {
+    font-size: 14px; font-weight: 700; margin-bottom: 18px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .panel-title .badge-tag {
+    font-size: 10px; background: var(--gold-dim); color: var(--gold);
+    border-radius: 5px; padding: 2px 8px; font-weight: 600;
+  }
+
+  /* ---- DAILY CLOSE TABLE ---- */
+  .daily-table { width: 100%; border-collapse: collapse; }
+  .daily-table th {
+    font-size: 10px; color: var(--muted); text-transform: uppercase;
+    letter-spacing: 1px; padding: 6px 10px; text-align: right;
+    border-bottom: 1px solid var(--border);
+  }
+  .daily-table td {
+    padding: 10px 10px; font-size: 13px;
+    border-bottom: 1px solid rgba(255,255,255,.04);
+  }
+  .daily-table tr:last-child td { border-bottom: none; }
+  .daily-table tr:hover td { background: rgba(255,255,255,.02); }
+  .amt-pos { color: var(--green); font-weight: 600; }
+  .amt-neg { color: var(--red); font-weight: 600; }
+  .amt-gold { color: var(--gold); font-weight: 700; }
+  .row-total td { border-top: 1px solid var(--border) !important; background: var(--surface2); }
+
+  /* ---- DISH PROFITABILITY ---- */
+  .dish-list { display: flex; flex-direction: column; gap: 10px; }
+  .dish-row { display: flex; align-items: center; gap: 12px; }
+  .dish-name { font-size: 13px; min-width: 110px; }
+  .dish-bar-wrap { flex: 1; background: var(--surface2); border-radius: 4px; height: 8px; overflow: hidden; }
+  .dish-bar { height: 100%; border-radius: 4px; transition: width .8s ease; }
+  .bar-high { background: linear-gradient(90deg, var(--green), #27ae60); }
+  .bar-mid  { background: linear-gradient(90deg, var(--gold), #b8860b); }
+  .bar-low  { background: linear-gradient(90deg, var(--red), #c0392b); }
+  .dish-pct { font-size: 12px; color: var(--muted); min-width: 38px; text-align: left; }
+  .dish-profit { font-size: 12px; font-weight: 600; min-width: 55px; text-align: left; }
+
+  /* ---- FOOD COST GAUGE ---- */
+  .gauge-wrap { display: flex; flex-direction: column; align-items: center; gap: 14px; }
+  .gauge-svg { width: 160px; height: 90px; }
+  .gauge-value { text-align: center; }
+  .gauge-num { font-size: 36px; font-weight: 900; color: var(--gold); }
+  .gauge-label { font-size: 12px; color: var(--muted); }
+  .gauge-status {
+    font-size: 11px; font-weight: 700; letter-spacing: 1px;
+    background: rgba(201,168,76,.15); color: var(--gold);
+    border-radius: 6px; padding: 3px 12px;
+  }
+
+  /* ---- BUDGET TRACKER ---- */
+  .budget-list { display: flex; flex-direction: column; gap: 14px; }
+  .budget-header { display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 13px; }
+  .budget-name { color: var(--text); }
+  .budget-nums { color: var(--muted); font-size: 12px; }
+  .budget-nums strong { color: var(--text); }
+  .budget-bar-bg { background: var(--surface2); border-radius: 6px; height: 6px; overflow: hidden; }
+  .budget-bar-fill { height: 100%; border-radius: 6px; transition: width 1s ease; }
+  .fill-safe { background: var(--green); }
+  .fill-warn { background: var(--gold); }
+  .fill-over { background: var(--red); }
+
+  /* ---- DAILY REPORT CARD ---- */
+  .report-card {
+    background: linear-gradient(135deg, #141820, #0f1217);
+    border: 1px solid var(--gold);
+    border-radius: 14px; padding: 24px;
+    margin-bottom: 28px;
+    position: relative; overflow: hidden;
+  }
+  .report-card::before {
+    content:''; position:absolute; inset:0;
+    background: radial-gradient(ellipse 70% 60% at 90% 50%, rgba(201,168,76,.07), transparent);
+    pointer-events: none;
+  }
+  .report-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 20px; }
+  .report-title { font-size: 16px; font-weight: 700; color: var(--gold); }
+  .report-sub { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .report-stamp {
+    background: var(--gold); color: #0a0c10;
+    font-size: 10px; font-weight: 900; letter-spacing: 2px;
+    border-radius: 5px; padding: 4px 10px;
+  }
+  .report-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  @media(max-width:600px){ .report-stats { grid-template-columns: repeat(2,1fr); } }
+  .rs-item { text-align: center; }
+  .rs-num { font-size: 22px; font-weight: 900; }
+  .rs-lbl { font-size: 11px; color: var(--muted); margin-top: 2px; }
+  .divider { height: 1px; background: var(--border); margin: 18px 0; }
+
+  /* ---- ALERT BANNER ---- */
+  .alert-banner {
+    border-radius: 10px; padding: 12px 18px; margin-bottom: 14px;
+    display: flex; align-items: center; gap: 12px; font-size: 13px;
+  }
+  .alert-warn { background: rgba(201,168,76,.1); border: 1px solid rgba(201,168,76,.3); color: var(--gold-light); }
+  .alert-danger { background: rgba(231,76,60,.1); border: 1px solid rgba(231,76,60,.3); color: #f1948a; }
+  .alert-ok { background: rgba(46,204,113,.1); border: 1px solid rgba(46,204,113,.3); color: #82e0aa; }
+  .alert-icon { font-size: 16px; flex-shrink:0; }
+
+  /* ---- INPUT FORM ---- */
+  .input-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-bottom: 16px; }
+  .input-group { display: flex; flex-direction: column; gap: 5px; }
+  .input-group label { font-size: 11px; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: .8px; }
+  .input-group input {
+    background: var(--surface2); border: 1px solid var(--border);
+    border-radius: 8px; padding: 9px 12px; color: var(--text);
+    font-family: 'Cairo', sans-serif; font-size: 14px;
+    transition: border-color .2s;
+    direction: ltr; text-align: right;
+  }
+  .input-group input:focus { outline: none; border-color: var(--gold); }
+  .input-group input::placeholder { color: var(--muted); font-size: 12px; }
+
+  .btn-primary {
+    background: linear-gradient(135deg, var(--gold), #8b6914);
+    color: #0a0c10; border: none; border-radius: 10px;
+    padding: 11px 28px; font-family: 'Cairo', sans-serif;
+    font-size: 14px; font-weight: 700; cursor: pointer;
+    transition: opacity .2s, transform .15s;
+  }
+  .btn-primary:hover { opacity:.9; transform: translateY(-1px); }
+  .btn-secondary {
+    background: var(--surface2); color: var(--text); border: 1px solid var(--border);
+    border-radius: 10px; padding: 11px 20px; font-family: 'Cairo', sans-serif;
+    font-size: 14px; cursor: pointer; transition: border-color .2s;
+  }
+  .btn-secondary:hover { border-color: var(--gold); }
+  .btn-row { display: flex; gap: 10px; flex-wrap: wrap; }
+
+  /* ---- WEEKLY CHART (CSS bars) ---- */
+  .week-chart { display: flex; align-items: flex-end; gap: 10px; height: 100px; padding-top: 10px; }
+  .week-bar-wrap { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 6px; }
+  .week-bar {
+    width: 100%; border-radius: 6px 6px 0 0;
+    background: linear-gradient(180deg, var(--gold-light), var(--gold));
+    transition: height .8s cubic-bezier(.4,0,.2,1);
+    position: relative; cursor: pointer;
+  }
+  .week-bar.revenue { background: linear-gradient(180deg, #5dade2, #2980b9); }
+  .week-bar.profit  { background: linear-gradient(180deg, #82e0aa, #27ae60); }
+  .week-day { font-size: 11px; color: var(--muted); }
+  .week-legend { display: flex; gap: 16px; margin-top: 12px; }
+  .wl-item { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--muted); }
+  .wl-dot { width: 10px; height: 10px; border-radius: 3px; }
+
+  /* ---- ANIMATE IN ---- */
+  @keyframes fadeUp {
+    from { opacity:0; transform: translateY(20px); }
+    to   { opacity:1; transform: translateY(0); }
+  }
+  .kpi-card, .panel, .report-card, .alert-banner {
+    animation: fadeUp .5s ease both;
+  }
+  .kpi-card:nth-child(1){ animation-delay:.05s }
+  .kpi-card:nth-child(2){ animation-delay:.1s }
+  .kpi-card:nth-child(3){ animation-delay:.15s }
+  .kpi-card:nth-child(4){ animation-delay:.2s }
+  .kpi-card:nth-child(5){ animation-delay:.25s }
+
+  /* ---- TABS ---- */
+  .tabs { display: flex; gap: 6px; margin-bottom: 20px; }
+  .tab {
+    padding: 7px 18px; border-radius: 8px; font-size: 13px; font-weight: 600;
+    cursor: pointer; border: 1px solid var(--border);
+    background: var(--surface); color: var(--muted);
+    transition: all .2s;
+  }
+  .tab.active { background: var(--gold-dim); border-color: var(--gold); color: var(--gold); }
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+
+  /* scroll */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <div class="logo-icon">🍽️</div>
+    <div>
+      <div class="logo-text">مركز المال</div>
+      <div class="logo-sub">إدارة مالية للمطاعم</div>
+    </div>
+  </div>
+  <div class="header-date" id="headerDate">
+    الجمعة <span>٣ أبريل ٢٠٢٦</span>
+  </div>
+</header>
+
+<div class="wrapper">
+
+  <!-- ALERTS -->
+  <div id="alerts-section">
+    <div class="alert-banner alert-warn">
+      <span class="alert-icon">⚠️</span>
+      <span>نسبة تكلفة الطعام وصلت لـ <strong>34%</strong> — القيمة المثلى أقل من 32%. راجع طلبيات اليوم.</span>
+    </div>
+    <div class="alert-banner alert-ok">
+      <span class="alert-icon">✅</span>
+      <span>إقفال أمس مكتمل — الفرق بين الصندوق الفعلي والنظام: <strong>0 ₪</strong></span>
+    </div>
+  </div>
+
+  <!-- KPI CARDS -->
+  <div class="section-title" style="margin-top:20px">مؤشرات اليوم</div>
+  <div class="kpi-grid" id="kpiGrid">
+    <div class="kpi-card">
+      <div class="kpi-label">المبيعات الإجمالية</div>
+      <div class="kpi-value"><span class="currency">₪</span><span id="kpi-sales">3,840</span></div>
+      <div class="kpi-badge badge-up">▲ 12% عن أمس</div>
+      <div class="kpi-icon">💰</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">تكلفة الطعام</div>
+      <div class="kpi-value"><span class="currency">₪</span><span id="kpi-food">1,306</span></div>
+      <div class="kpi-badge badge-warn">34% من المبيعات</div>
+      <div class="kpi-icon">🥗</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">الرواتب اليوم</div>
+      <div class="kpi-value"><span class="currency">₪</span><span id="kpi-salary">620</span></div>
+      <div class="kpi-badge badge-up">ضمن الميزانية</div>
+      <div class="kpi-icon">👥</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">صافي الربح</div>
+      <div class="kpi-value"><span class="currency">₪</span><span id="kpi-profit">1,914</span></div>
+      <div class="kpi-badge badge-up">▲ 49.8%</div>
+      <div class="kpi-icon">📈</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">عدد الطلبات</div>
+      <div class="kpi-value"><span id="kpi-orders">127</span></div>
+      <div class="kpi-badge badge-up">متوسط ₪30.2</div>
+      <div class="kpi-icon">🧾</div>
+    </div>
+  </div>
+
+  <!-- TABS -->
+  <div class="tabs">
+    <div class="tab active" onclick="switchTab('daily')">إقفال يومي</div>
+    <div class="tab" onclick="switchTab('dishes')">ربحية الأصناف</div>
+    <div class="tab" onclick="switchTab('budget')">الميزانية الشهرية</div>
+    <div class="tab" onclick="switchTab('weekly')">التقرير الأسبوعي</div>
+  </div>
+
+  <!-- TAB: DAILY CLOSE -->
+  <div class="tab-content active" id="tab-daily">
+    <div class="report-card">
+      <div class="report-header">
+        <div>
+          <div class="report-title">📋 إقفال الصندوق — اليومي</div>
+          <div class="report-sub">الجمعة ٣ أبريل ٢٠٢٦</div>
+        </div>
+        <div class="report-stamp">مؤكّد ✓</div>
+      </div>
+      <div class="report-stats">
+        <div class="rs-item"><div class="rs-num" style="color:var(--green)">₪3,840</div><div class="rs-lbl">إجمالي الدخل</div></div>
+        <div class="rs-item"><div class="rs-num" style="color:var(--red)">₪1,926</div><div class="rs-lbl">إجمالي المصاريف</div></div>
+        <div class="rs-item"><div class="rs-num" style="color:var(--gold)">₪1,914</div><div class="rs-lbl">صافي الربح</div></div>
+        <div class="rs-item"><div class="rs-num" style="color:var(--blue)">49.8%</div><div class="rs-lbl">هامش الربح</div></div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-title">تفاصيل الإقفال <span class="badge-tag">يومي</span></div>
+      <table class="daily-table">
+        <thead>
+          <tr>
+            <th>البند</th>
+            <th>المبلغ (₪)</th>
+            <th>النوع</th>
+            <th>ملاحظة</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>مبيعات الطعام</td><td class="amt-pos">+3,500</td><td>دخل</td><td>127 طلب</td></tr>
+          <tr><td>مبيعات المشروبات</td><td class="amt-pos">+340</td><td>دخل</td><td>—</td></tr>
+          <tr><td>خصومات وعروض</td><td class="amt-neg">-80</td><td>خصم</td><td>عرض نهاية الأسبوع</td></tr>
+          <tr><td>تكلفة المواد الخام</td><td class="amt-neg">-1,306</td><td>مصروف</td><td>34% — يجب مراجعة</td></tr>
+          <tr><td>رواتب الموظفين</td><td class="amt-neg">-620</td><td>مصروف</td><td>ضمن الميزانية</td></tr>
+          <tr class="row-total"><td><strong>صافي اليوم</strong></td><td class="amt-gold">+1,914</td><td>—</td><td>هامش 49.8%</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div style="margin-top:18px">
+      <div class="section-title">تسجيل مصروف جديد</div>
+      <div class="panel">
+        <div class="input-grid">
+          <div class="input-group">
+            <label>البند</label>
+            <input type="text" id="exp-name" placeholder="مثال: صيانة ثلاجة">
+          </div>
+          <div class="input-group">
+            <label>المبلغ (₪)</label>
+            <input type="number" id="exp-amount" placeholder="0.00">
+          </div>
+          <div class="input-group">
+            <label>التصنيف</label>
+            <input type="text" id="exp-cat" placeholder="صيانة / مواد / غير ذلك">
+          </div>
+        </div>
+        <div class="btn-row">
+          <button class="btn-primary" onclick="addExpense()">➕ إضافة مصروف</button>
+          <button class="btn-secondary" onclick="printReport()">🖨️ طباعة التقرير</button>
+        </div>
+        <div id="expense-log" style="margin-top:14px;display:none;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB: DISHES -->
+  <div class="tab-content" id="tab-dishes">
+    <div class="two-col">
+      <div class="panel">
+        <div class="panel-title">ربحية كل صنف <span class="badge-tag">هامش الربح</span></div>
+        <div class="dish-list">
+          <div class="dish-row">
+            <div class="dish-name">مشاوي مشكّلة</div>
+            <div class="dish-bar-wrap"><div class="dish-bar bar-high" style="width:78%"></div></div>
+            <div class="dish-pct">78%</div>
+            <div class="dish-profit" style="color:var(--green)">₪22 ربح</div>
+          </div>
+          <div class="dish-row">
+            <div class="dish-name">برغر مميز</div>
+            <div class="dish-bar-wrap"><div class="dish-bar bar-high" style="width:65%"></div></div>
+            <div class="dish-pct">65%</div>
+            <div class="dish-profit" style="color:var(--green)">₪19 ربح</div>
+          </div>
+          <div class="dish-row">
+            <div class="dish-name">سلطة فتوش</div>
+            <div class="dish-bar-wrap"><div class="dish-bar bar-high" style="width:71%"></div></div>
+            <div class="dish-pct">71%</div>
+            <div class="dish-profit" style="color:var(--green)">₪11 ربح</div>
+          </div>
+          <div class="dish-row">
+            <div class="dish-name">عصائر طازجة</div>
+            <div class="dish-bar-wrap"><div class="dish-bar bar-mid" style="width:52%"></div></div>
+            <div class="dish-pct">52%</div>
+            <div class="dish-profit" style="color:var(--gold)">₪7 ربح</div>
+          </div>
+          <div class="dish-row">
+            <div class="dish-name">سمك مشوي</div>
+            <div class="dish-bar-wrap"><div class="dish-bar bar-mid" style="width:41%"></div></div>
+            <div class="dish-pct">41%</div>
+            <div class="dish-profit" style="color:var(--gold)">₪14 ربح</div>
+          </div>
+          <div class="dish-row">
+            <div class="dish-name">بيتزا عائلية</div>
+            <div class="dish-bar-wrap"><div class="dish-bar bar-low" style="width:28%"></div></div>
+            <div class="dish-pct">28%</div>
+            <div class="dish-profit" style="color:var(--red)">₪8 ربح</div>
+          </div>
+          <div class="dish-row">
+            <div class="dish-name">حلويات شرقية</div>
+            <div class="dish-bar-wrap"><div class="dish-bar bar-low" style="width:22%"></div></div>
+            <div class="dish-pct">22%</div>
+            <div class="dish-profit" style="color:var(--red)">₪3 ربح</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-title">نسبة تكلفة الطعام (Food Cost) <span class="badge-tag">تحذير</span></div>
+        <div class="gauge-wrap">
+          <svg class="gauge-svg" viewBox="0 0 160 90">
+            <!-- track -->
+            <path d="M15,85 A75,75 0 0,1 145,85" fill="none" stroke="#1e2530" stroke-width="12" stroke-linecap="round"/>
+            <!-- fill: 34% of 180deg arc -->
+            <path d="M15,85 A75,75 0 0,1 145,85" fill="none" stroke="url(#gGrad)" stroke-width="12" stroke-linecap="round"
+              stroke-dasharray="236" stroke-dashoffset="156"/>
+            <defs>
+              <linearGradient id="gGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#27ae60"/>
+                <stop offset="60%" stop-color="#c9a84c"/>
+                <stop offset="100%" stop-color="#e74c3c"/>
+              </linearGradient>
+            </defs>
+          </svg>
+          <div class="gauge-value">
+            <div class="gauge-num">34%</div>
+            <div class="gauge-label">الهدف: أقل من 32%</div>
+          </div>
+          <div class="gauge-status">⚠ يحتاج مراجعة</div>
+        </div>
+        <div class="divider"></div>
+        <div style="font-size:12px;color:var(--muted);line-height:1.7">
+          📌 <strong style="color:var(--text)">نصيحة:</strong> راجع الأصناف ذات الربحية المنخفضة كالبيتزا والحلويات — يمكن رفع سعرها أو تقليل مكوناتها لتحسين الهامش.
+        </div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-title">إضافة صنف جديد وحساب ربحيته</div>
+      <div class="input-grid">
+        <div class="input-group"><label>اسم الصنف</label><input type="text" id="dish-name" placeholder="مثال: شاورما دجاج"></div>
+        <div class="input-group"><label>سعر البيع (₪)</label><input type="number" id="dish-price" placeholder="35"></div>
+        <div class="input-group"><label>تكلفة المواد (₪)</label><input type="number" id="dish-cost" placeholder="12"></div>
+      </div>
+      <div class="btn-row">
+        <button class="btn-primary" onclick="calcDish()">🔢 احسب الربحية</button>
+      </div>
+      <div id="dish-result" style="margin-top:14px;display:none;" class="alert-banner alert-ok"></div>
+    </div>
+  </div>
+
+  <!-- TAB: BUDGET -->
+  <div class="tab-content" id="tab-budget">
+    <div class="two-col">
+      <div class="panel">
+        <div class="panel-title">الميزانية الشهرية — أبريل ٢٠٢٦ <span class="badge-tag">أسبوعان مضيا</span></div>
+        <div class="budget-list">
+          <div class="budget-item">
+            <div class="budget-header">
+              <span class="budget-name">🥩 المواد الغذائية</span>
+              <span class="budget-nums"><strong>₪18,400</strong> / ₪28,000</span>
+            </div>
+            <div class="budget-bar-bg"><div class="budget-bar-fill fill-safe" style="width:65%"></div></div>
+          </div>
+          <div class="budget-item">
+            <div class="budget-header">
+              <span class="budget-name">👥 الرواتب</span>
+              <span class="budget-nums"><strong>₪9,200</strong> / ₪12,000</span>
+            </div>
+            <div class="budget-bar-bg"><div class="budget-bar-fill fill-safe" style="width:77%"></div></div>
+          </div>
+          <div class="budget-item">
+            <div class="budget-header">
+              <span class="budget-name">🏠 الإيجار</span>
+              <span class="budget-nums"><strong>₪4,500</strong> / ₪4,500</span>
+            </div>
+            <div class="budget-bar-bg"><div class="budget-bar-fill fill-warn" style="width:100%"></div></div>
+          </div>
+          <div class="budget-item">
+            <div class="budget-header">
+              <span class="budget-name">⚡ الكهرباء والماء</span>
+              <span class="budget-nums"><strong>₪2,100</strong> / ₪2,500</span>
+            </div>
+            <div class="budget-bar-bg"><div class="budget-bar-fill fill-warn" style="width:84%"></div></div>
+          </div>
+          <div class="budget-item">
+            <div class="budget-header">
+              <span class="budget-name">🔧 الصيانة</span>
+              <span class="budget-nums"><strong>₪1,850</strong> / ₪1,500</span>
+            </div>
+            <div class="budget-bar-bg"><div class="budget-bar-fill fill-over" style="width:100%"></div></div>
+          </div>
+          <div class="budget-item">
+            <div class="budget-header">
+              <span class="budget-name">📦 مواد تغليف</span>
+              <span class="budget-nums"><strong>₪740</strong> / ₪1,200</span>
+            </div>
+            <div class="budget-bar-bg"><div class="budget-bar-fill fill-safe" style="width:62%"></div></div>
+          </div>
+        </div>
+        <div class="divider"></div>
+        <div class="alert-banner alert-danger" style="margin:0">
+          <span class="alert-icon">🔴</span>
+          <span>الصيانة تجاوزت الميزانية بـ <strong>₪350</strong> — يجب الموافقة على أي مصروف إضافي</span>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-title">تحديث الميزانية</div>
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div class="input-group"><label>البند</label><input type="text" id="bud-name" placeholder="اسم البند"></div>
+          <div class="input-group"><label>الميزانية المخصصة (₪)</label><input type="number" id="bud-limit" placeholder="0"></div>
+          <div class="input-group"><label>المصروف حتى الآن (₪)</label><input type="number" id="bud-spent" placeholder="0"></div>
+          <button class="btn-primary" onclick="addBudget()">➕ إضافة بند</button>
+        </div>
+        <div id="bud-result" style="margin-top:12px;display:none;" class="alert-banner"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB: WEEKLY -->
+  <div class="tab-content" id="tab-weekly">
+    <div class="panel" style="margin-bottom:18px">
+      <div class="panel-title">الأداء الأسبوعي — الأسبوع الأول أبريل <span class="badge-tag">أسبوعي</span></div>
+      <div class="week-chart" id="weekChart"></div>
+      <div class="week-legend">
+        <div class="wl-item"><div class="wl-dot" style="background:#2980b9"></div>المبيعات</div>
+        <div class="wl-item"><div class="wl-dot" style="background:#27ae60"></div>الربح</div>
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div class="panel">
+        <div class="panel-title">ملخص الأسبوع</div>
+        <table class="daily-table">
+          <thead><tr><th>اليوم</th><th>مبيعات</th><th>ربح</th><th>الحالة</th></tr></thead>
+          <tbody>
+            <tr><td>السبت</td><td class="amt-pos">₪3,200</td><td class="amt-pos">₪1,540</td><td><span class="kpi-badge badge-up">جيد</span></td></tr>
+            <tr><td>الأحد</td><td class="amt-pos">₪2,850</td><td class="amt-pos">₪1,280</td><td><span class="kpi-badge badge-up">جيد</span></td></tr>
+            <tr><td>الاثنين</td><td class="amt-pos">₪2,100</td><td class="amt-pos">₪900</td><td><span class="kpi-badge badge-warn">متوسط</span></td></tr>
+            <tr><td>الثلاثاء</td><td class="amt-pos">₪3,500</td><td class="amt-pos">₪1,700</td><td><span class="kpi-badge badge-up">ممتاز</span></td></tr>
+            <tr><td>الأربعاء</td><td class="amt-pos">₪2,600</td><td class="amt-pos">₪1,100</td><td><span class="kpi-badge badge-up">جيد</span></td></tr>
+            <tr><td>الخميس</td><td class="amt-pos">₪4,100</td><td class="amt-pos">₪2,050</td><td><span class="kpi-badge badge-up">ممتاز</span></td></tr>
+            <tr><td>الجمعة</td><td class="amt-pos">₪3,840</td><td class="amt-pos">₪1,914</td><td><span class="kpi-badge badge-up">جيد</span></td></tr>
+            <tr class="row-total"><td><strong>الإجمالي</strong></td><td class="amt-gold">₪22,190</td><td class="amt-gold">₪10,484</td><td>—</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="panel">
+        <div class="panel-title">توصيات الأسبوع القادم</div>
+        <div style="display:flex;flex-direction:column;gap:12px;font-size:13px;line-height:1.7">
+          <div class="alert-banner alert-warn" style="margin:0">⚠️ خفّض تكلفة الطعام من 34% إلى 30% بمراجعة الموردين أو تعديل الوصفات.</div>
+          <div class="alert-banner alert-ok" style="margin:0">✅ يوم الخميس الأقوى — ابدأ عروض خاصة الأحد والاثنين لرفع المبيعات.</div>
+          <div class="alert-banner alert-warn" style="margin:0">⚠️ الحلويات ربحيتها 22% فقط — ارفع السعر أو اختصر التشكيلة.</div>
+          <div class="alert-banner alert-ok" style="margin:0">✅ هامش الربح الأسبوعي 47.2% — هدف ممتاز الاستمرار فوق 45%.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- end wrapper -->
+
+<script>
+// Tab switching
+function switchTab(id) {
+  document.querySelectorAll('.tab').forEach((t,i) => {
+    const ids = ['daily','dishes','budget','weekly'];
+    t.classList.toggle('active', ids[i] === id);
+  });
+  document.querySelectorAll('.tab-content').forEach(c => {
+    c.classList.toggle('active', c.id === 'tab-' + id);
+  });
+  if (id === 'weekly') buildWeekChart();
+}
+
+// Add expense
+const expenses = [];
+function addExpense() {
+  const name = document.getElementById('exp-name').value.trim();
+  const amt  = parseFloat(document.getElementById('exp-amount').value);
+  const cat  = document.getElementById('exp-cat').value.trim() || 'عام';
+  if (!name || isNaN(amt) || amt <= 0) { alert('يرجى إدخال البند والمبلغ بشكل صحيح'); return; }
+  expenses.push({name, amt, cat});
+  const log = document.getElementById('expense-log');
+  log.style.display = 'block';
+  log.innerHTML = `<div class="panel-title" style="font-size:13px;margin-bottom:10px">المصاريف المسجّلة</div>` +
+    expenses.map(e => `<div class="alert-banner alert-warn" style="margin-bottom:6px;padding:8px 14px">
+      <span class="alert-icon">💸</span>
+      <span><strong>${e.name}</strong> — ₪${e.amt.toLocaleString()} (${e.cat})</span>
+    </div>`).join('');
+  document.getElementById('exp-name').value = '';
+  document.getElementById('exp-amount').value = '';
+  document.getElementById('exp-cat').value = '';
+}
+
+// Calc dish
+function calcDish() {
+  const name  = document.getElementById('dish-name').value || 'الصنف';
+  const price = parseFloat(document.getElementById('dish-price').value);
+  const cost  = parseFloat(document.getElementById('dish-cost').value);
+  if (isNaN(price)||isNaN(cost)||price<=0||cost<0) { alert('أدخل سعر البيع وتكلفة المواد'); return; }
+  const profit = price - cost;
+  const margin = ((profit / price) * 100).toFixed(1);
+  const el = document.getElementById('dish-result');
+  el.style.display = 'flex';
+  const cls = margin > 55 ? 'alert-ok' : margin > 35 ? 'alert-warn' : 'alert-danger';
+  el.className = 'alert-banner ' + cls;
+  el.innerHTML = `<span class="alert-icon">${margin>55?'✅':margin>35?'⚠️':'🔴'}</span>
+    <span><strong>${name}</strong>: ربح ₪${profit} — هامش <strong>${margin}%</strong> 
+    ${margin>55?' — ممتاز! روّج لهذا الصنف':margin>35?' — مقبول، يمكن تحسينه':' — منخفض جداً، راجع التسعير أو التكلفة'}</span>`;
+}
+
+// Budget add
+function addBudget() {
+  const name  = document.getElementById('bud-name').value.trim();
+  const limit = parseFloat(document.getElementById('bud-limit').value);
+  const spent = parseFloat(document.getElementById('bud-spent').value);
+  if (!name||isNaN(limit)||isNaN(spent)) { alert('أكمل البيانات'); return; }
+  const pct = Math.min((spent/limit)*100, 100).toFixed(0);
+  const over = spent > limit;
+  const el = document.getElementById('bud-result');
+  el.style.display = 'flex';
+  el.className = 'alert-banner ' + (over ? 'alert-danger' : pct > 80 ? 'alert-warn' : 'alert-ok');
+  el.innerHTML = `<span>${over ? '🔴' : pct>80?'⚠️':'✅'}</span>
+    <span><strong>${name}</strong>: ₪${spent} من ₪${limit} (${pct}%) — ${over?'تجاوز الميزانية!':pct>80?'اقترب من السقف':'ضمن الميزانية'}</span>`;
+}
+
+// Print
+function printReport() { window.print(); }
+
+// Weekly chart
+const weekData = [
+  {day:'سبت', rev:3200, profit:1540},
+  {day:'أحد',  rev:2850, profit:1280},
+  {day:'اثنين',rev:2100, profit:900},
+  {day:'ثلاثاء',rev:3500,profit:1700},
+  {day:'أربعاء',rev:2600,profit:1100},
+  {day:'خميس',rev:4100, profit:2050},
+  {day:'جمعة',rev:3840, profit:1914},
+];
+function buildWeekChart() {
+  const wrap = document.getElementById('weekChart');
+  if (wrap.children.length > 0) return;
+  const maxRev = Math.max(...weekData.map(d=>d.rev));
+  weekData.forEach(d => {
+    const revH  = Math.round((d.rev/maxRev)*88);
+    const proH  = Math.round((d.profit/maxRev)*88);
+    const col = document.createElement('div');
+    col.className = 'week-bar-wrap';
+    col.innerHTML = `
+      <div style="display:flex;align-items:flex-end;gap:3px;height:88px">
+        <div class="week-bar revenue" style="width:14px;height:${revH}px" title="مبيعات ₪${d.rev}"></div>
+        <div class="week-bar profit"  style="width:14px;height:${proH}px" title="ربح ₪${d.profit}"></div>
+      </div>
+      <div class="week-day">${d.day}</div>`;
+    wrap.appendChild(col);
+  });
+}
+</script>
+</body>
+</html>
