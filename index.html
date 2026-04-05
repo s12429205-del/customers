@@ -3,772 +3,1456 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>مركز المال | إدارة مالية للمطاعم</title>
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+<title>اطبخ طبقك الفلسطيني | مطعم التراث الفلسطيني</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #0a0c10;
-    --surface: #111318;
-    --surface2: #181c23;
-    --border: #1e2530;
-    --gold: #c9a84c;
-    --gold-light: #e8c97a;
-    --gold-dim: rgba(201,168,76,0.12);
-    --green: #2ecc71;
-    --red: #e74c3c;
-    --blue: #3498db;
-    --text: #e8e6e0;
-    --muted: #7a8090;
-    --accent: #c9a84c;
+    --clay: #C4714A;
+    --earth: #8B4F2E;
+    --cream: #F5EDD8;
+    --olive: #5C6B3A;
+    --olive-light: #8A9A5B;
+    --charcoal: #2A2118;
+    --gold: #C8952A;
+    --gold-light: #E8B84B;
+    --smoke: #F0E8D5;
+    --terracotta: #B85C38;
+    --parchment: #EDE0C4;
   }
 
-  * { margin:0; padding:0; box-sizing:border-box; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
 
   body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'Cairo', sans-serif;
-    min-height: 100vh;
+    font-family: 'Tajawal', sans-serif;
+    background: var(--cream);
+    color: var(--charcoal);
     overflow-x: hidden;
   }
 
-  /* Background texture */
+  /* ── GRAIN OVERLAY ── */
   body::before {
-    content:'';
-    position:fixed; inset:0;
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.5;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 60px;
+    background: rgba(42, 33, 24, 0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(200, 149, 42, 0.3);
+  }
+
+  .nav-logo {
+    font-family: 'Amiri', serif;
+    font-size: 2rem;
+    color: var(--gold-light);
+    letter-spacing: 2px;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--cream);
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    opacity: 0.85;
+    transition: opacity 0.2s, color 0.2s;
+  }
+
+  .nav-links a:hover { opacity: 1; color: var(--gold-light); }
+
+  .nav-cta {
+    background: var(--clay);
+    color: var(--cream) !important;
+    padding: 10px 24px;
+    border-radius: 2px;
+    opacity: 1 !important;
+    transition: background 0.2s !important;
+  }
+
+  .nav-cta:hover { background: var(--earth) !important; }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    position: relative;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    background: var(--charcoal);
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
     background:
-      radial-gradient(ellipse 60% 40% at 80% 20%, rgba(201,168,76,0.06) 0%, transparent 60%),
-      radial-gradient(ellipse 40% 60% at 10% 80%, rgba(52,152,219,0.04) 0%, transparent 60%);
-    pointer-events:none; z-index:0;
+      radial-gradient(ellipse 70% 60% at 80% 50%, rgba(196, 113, 74, 0.18) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 80% at 20% 80%, rgba(92, 107, 58, 0.15) 0%, transparent 60%),
+      linear-gradient(135deg, #2A2118 0%, #3D2E1E 40%, #2A1F14 100%);
   }
 
-  /* ---- HEADER ---- */
-  header {
-    position: sticky; top:0; z-index:100;
-    background: rgba(10,12,16,0.92);
-    backdrop-filter: blur(16px);
-    border-bottom: 1px solid var(--border);
-    padding: 0 28px;
-    display: flex; align-items: center; justify-content: space-between;
-    height: 64px;
+  .hero-pattern {
+    position: absolute;
+    inset: 0;
+    opacity: 0.06;
+    background-image: repeating-linear-gradient(
+      45deg,
+      var(--gold) 0px, var(--gold) 1px,
+      transparent 1px, transparent 28px
+    ),
+    repeating-linear-gradient(
+      -45deg,
+      var(--gold) 0px, var(--gold) 1px,
+      transparent 1px, transparent 28px
+    );
   }
 
-  .logo {
-    display: flex; align-items: center; gap: 12px;
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    padding: 0 60px;
+    max-width: 780px;
+    animation: fadeUp 1.2s ease forwards;
   }
-  .logo-icon {
-    width: 36px; height: 36px;
-    background: linear-gradient(135deg, var(--gold), #8b6914);
-    border-radius: 10px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 18px;
-  }
-  .logo-text { font-size: 18px; font-weight: 700; color: var(--gold); letter-spacing: .5px; }
-  .logo-sub { font-size: 11px; color: var(--muted); font-weight: 400; }
 
-  .header-date {
+  .hero-tag {
+    display: inline-block;
+    font-size: 0.78rem;
+    letter-spacing: 4px;
+    color: var(--gold-light);
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    border-right: 2px solid var(--clay);
+    padding-right: 14px;
+  }
+
+  .hero h1 {
+    font-family: 'Amiri', serif;
+    font-size: clamp(3.5rem, 7vw, 6rem);
+    color: var(--cream);
+    line-height: 1.1;
+    margin-bottom: 20px;
+  }
+
+  .hero h1 span { color: var(--gold-light); }
+
+  .hero-sub {
+    font-size: 1.15rem;
+    color: rgba(245, 237, 216, 0.72);
+    line-height: 1.8;
+    max-width: 520px;
+    margin-bottom: 44px;
+    font-weight: 300;
+  }
+
+  .hero-btns { display: flex; gap: 16px; flex-wrap: wrap; }
+
+  .btn-primary {
+    background: var(--clay);
+    color: var(--cream);
+    padding: 16px 36px;
     font-family: 'Tajawal', sans-serif;
-    font-size: 13px; color: var(--muted);
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 6px 14px;
+    font-size: 1rem;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    border-radius: 2px;
+    transition: background 0.25s, transform 0.2s;
+    text-decoration: none;
+    display: inline-block;
   }
-  .header-date span { color: var(--gold); font-weight: 600; }
 
-  /* ---- LAYOUT ---- */
-  .wrapper { max-width: 1200px; margin: 0 auto; padding: 28px 20px; position:relative; z-index:1; }
+  .btn-primary:hover { background: var(--earth); transform: translateY(-2px); }
 
-  /* ---- SECTION TITLE ---- */
+  .btn-outline {
+    background: transparent;
+    color: var(--cream);
+    padding: 16px 36px;
+    font-family: 'Tajawal', sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+    border: 1px solid rgba(245, 237, 216, 0.4);
+    cursor: pointer;
+    border-radius: 2px;
+    transition: border-color 0.25s, color 0.25s;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  .btn-outline:hover { border-color: var(--gold-light); color: var(--gold-light); }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    color: rgba(245, 237, 216, 0.5);
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    animation: bounce 2s infinite;
+  }
+
+  .hero-scroll-line {
+    width: 1px;
+    height: 48px;
+    background: linear-gradient(to bottom, rgba(200, 149, 42, 0.7), transparent);
+  }
+
+  /* ── SECTION BASE ── */
+  section { padding: 100px 60px; }
+
+  .section-tag {
+    font-size: 0.72rem;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: var(--clay);
+    margin-bottom: 14px;
+    display: block;
+  }
+
   .section-title {
-    font-size: 12px; font-weight: 600; letter-spacing: 2px;
-    text-transform: uppercase; color: var(--gold);
-    margin-bottom: 16px;
-    display: flex; align-items: center; gap: 10px;
-  }
-  .section-title::after {
-    content:''; flex:1; height:1px;
-    background: linear-gradient(90deg, var(--gold-dim), transparent);
+    font-family: 'Amiri', serif;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    color: var(--charcoal);
+    margin-bottom: 18px;
+    line-height: 1.2;
   }
 
-  /* ---- KPI CARDS ---- */
-  .kpi-grid {
+  .section-title span { color: var(--clay); }
+
+  .section-divider {
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(to left, var(--clay), var(--gold));
+    margin-bottom: 40px;
+    border-radius: 2px;
+  }
+
+  /* ── ABOUT ── */
+  .about {
+    background: var(--charcoal);
+    color: var(--cream);
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-    gap: 14px;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .about .section-title { color: var(--cream); }
+  .about .section-divider { background: linear-gradient(to left, var(--clay), var(--gold-light)); }
+
+  .about-text {
+    font-size: 1.05rem;
+    line-height: 2;
+    color: rgba(245, 237, 216, 0.8);
+    font-weight: 300;
+    margin-bottom: 24px;
+  }
+
+  .about-visual {
+    position: relative;
+  }
+
+  .about-frame {
+    width: 100%;
+    aspect-ratio: 4/5;
+    background: linear-gradient(135deg, var(--earth), var(--clay) 50%, var(--terracotta));
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Amiri', serif;
+    font-size: 7rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .about-frame::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg, transparent, transparent 30px,
+      rgba(0,0,0,0.08) 30px, rgba(0,0,0,0.08) 31px
+    );
+  }
+
+  .about-badge {
+    position: absolute;
+    bottom: -20px;
+    right: -20px;
+    width: 120px;
+    height: 120px;
+    background: var(--gold);
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Amiri', serif;
+    color: var(--charcoal);
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-align: center;
+    line-height: 1.4;
+    box-shadow: 0 8px 32px rgba(200, 149, 42, 0.4);
+  }
+
+  .about-badge .num { font-size: 2rem; display: block; }
+
+  /* ── EXPERIENCE "اطبخ طبقك" ── */
+  .experience {
+    background: var(--smoke);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .experience::before {
+    content: 'اطبخ';
+    position: absolute;
+    top: -30px;
+    left: -20px;
+    font-family: 'Amiri', serif;
+    font-size: 18rem;
+    color: rgba(196, 113, 74, 0.06);
+    pointer-events: none;
+    line-height: 1;
+  }
+
+  .experience-header { max-width: 600px; margin-bottom: 60px; }
+
+  .packages {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+  }
+
+  .package-card {
+    background: white;
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: 0 4px 24px rgba(42, 33, 24, 0.08);
+    transition: transform 0.3s, box-shadow 0.3s;
+    position: relative;
+  }
+
+  .package-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 16px 48px rgba(42, 33, 24, 0.16);
+  }
+
+  .package-card.featured {
+    border: 2px solid var(--gold);
+  }
+
+  .package-badge-top {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    background: var(--gold);
+    color: var(--charcoal);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    padding: 4px 10px;
+    border-radius: 2px;
+    text-transform: uppercase;
+  }
+
+  .package-header {
+    padding: 36px 32px 24px;
+    border-bottom: 1px solid var(--parchment);
+  }
+
+  .package-icon {
+    font-size: 2.4rem;
+    margin-bottom: 14px;
+    display: block;
+  }
+
+  .package-name {
+    font-family: 'Amiri', serif;
+    font-size: 1.6rem;
+    color: var(--charcoal);
+    margin-bottom: 6px;
+  }
+
+  .package-sub {
+    font-size: 0.85rem;
+    color: var(--clay);
+    font-weight: 500;
+  }
+
+  .package-price {
+    padding: 20px 32px;
+    background: var(--parchment);
+  }
+
+  .price-amount {
+    font-family: 'Amiri', serif;
+    font-size: 2.2rem;
+    color: var(--charcoal);
+  }
+
+  .price-currency {
+    font-size: 0.85rem;
+    color: rgba(42, 33, 24, 0.6);
+    margin-right: 6px;
+  }
+
+  .price-per {
+    font-size: 0.78rem;
+    color: rgba(42, 33, 24, 0.55);
+    display: block;
+    margin-top: 2px;
+  }
+
+  .package-body { padding: 28px 32px; }
+
+  .package-features {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
     margin-bottom: 28px;
   }
 
-  .kpi-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 20px 22px;
-    position: relative; overflow: hidden;
-    cursor: pointer;
-    transition: transform .2s, border-color .2s;
+  .package-features li {
+    font-size: 0.9rem;
+    color: rgba(42, 33, 24, 0.8);
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    line-height: 1.5;
   }
-  .kpi-card:hover { transform: translateY(-3px); border-color: var(--gold); }
-  .kpi-card::before {
-    content:''; position:absolute; top:0; right:0;
-    width:80px; height:80px;
-    background: radial-gradient(circle, var(--gold-dim) 0%, transparent 70%);
+
+  .package-features li::before {
+    content: '✦';
+    color: var(--clay);
+    font-size: 0.65rem;
+    margin-top: 4px;
+    flex-shrink: 0;
+  }
+
+  .package-duration {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.82rem;
+    color: var(--olive);
+    font-weight: 600;
+    background: rgba(92, 107, 58, 0.1);
+    padding: 8px 14px;
+    border-radius: 2px;
+    margin-bottom: 20px;
+  }
+
+  .btn-book {
+    width: 100%;
+    background: var(--charcoal);
+    color: var(--cream);
+    padding: 14px;
+    border: none;
+    border-radius: 2px;
+    font-family: 'Tajawal', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.25s;
+    letter-spacing: 0.5px;
+  }
+
+  .btn-book:hover { background: var(--clay); }
+
+  .featured .btn-book { background: var(--clay); }
+  .featured .btn-book:hover { background: var(--earth); }
+
+  /* ── DISHES MENU ── */
+  .menu {
+    background: var(--charcoal);
+    color: var(--cream);
+  }
+
+  .menu .section-title { color: var(--cream); }
+
+  .cities-nav {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 48px;
+  }
+
+  .city-btn {
+    padding: 9px 22px;
+    background: transparent;
+    border: 1px solid rgba(245, 237, 216, 0.25);
+    color: rgba(245, 237, 216, 0.7);
+    border-radius: 2px;
+    font-family: 'Tajawal', sans-serif;
+    font-size: 0.88rem;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .city-btn.active,
+  .city-btn:hover {
+    background: var(--clay);
+    border-color: var(--clay);
+    color: var(--cream);
+  }
+
+  .dishes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 24px;
+  }
+
+  .dish-card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(245, 237, 216, 0.1);
+    border-radius: 4px;
+    overflow: hidden;
+    transition: border-color 0.3s, background 0.3s;
+    cursor: pointer;
+  }
+
+  .dish-card:hover {
+    border-color: var(--clay);
+    background: rgba(196, 113, 74, 0.08);
+  }
+
+  .dish-img {
+    width: 100%;
+    aspect-ratio: 4/3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .dish-city-tag {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background: var(--gold);
+    color: var(--charcoal);
+    font-size: 0.68rem;
+    font-weight: 700;
+    padding: 3px 9px;
+    border-radius: 2px;
+    letter-spacing: 1px;
+  }
+
+  .dish-info { padding: 20px; }
+
+  .dish-name {
+    font-family: 'Amiri', serif;
+    font-size: 1.25rem;
+    color: var(--cream);
+    margin-bottom: 6px;
+  }
+
+  .dish-desc {
+    font-size: 0.82rem;
+    color: rgba(245, 237, 216, 0.55);
+    line-height: 1.6;
+  }
+
+  /* ── VIP EXPERIENCE ── */
+  .vip {
+    background: linear-gradient(135deg, var(--charcoal) 0%, #3D2A18 50%, var(--charcoal) 100%);
+    position: relative;
+    overflow: hidden;
+    padding: 120px 60px;
+  }
+
+  .vip-pattern {
+    position: absolute;
+    inset: 0;
+    opacity: 0.04;
+    background-image:
+      repeating-conic-gradient(var(--gold) 0% 25%, transparent 0% 50%);
+    background-size: 40px 40px;
+  }
+
+  .vip-inner {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .vip-content .section-title { color: var(--cream); }
+  .vip-content .section-title span { color: var(--gold-light); }
+
+  .vip-text {
+    font-size: 1.05rem;
+    line-height: 1.9;
+    color: rgba(245, 237, 216, 0.75);
+    margin-bottom: 32px;
+    font-weight: 300;
+  }
+
+  .vip-features {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-bottom: 40px;
+  }
+
+  .vip-feature {
+    display: flex;
+    align-items: flex-start;
+    gap: 18px;
+  }
+
+  .vip-feature-icon {
+    width: 48px;
+    height: 48px;
+    background: rgba(200, 149, 42, 0.15);
+    border: 1px solid rgba(200, 149, 42, 0.3);
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    flex-shrink: 0;
+  }
+
+  .vip-feature-text { flex: 1; }
+
+  .vip-feature-title {
+    font-weight: 700;
+    color: var(--gold-light);
+    margin-bottom: 4px;
+    font-size: 0.95rem;
+  }
+
+  .vip-feature-desc {
+    font-size: 0.85rem;
+    color: rgba(245, 237, 216, 0.6);
+    line-height: 1.6;
+  }
+
+  .vip-visual {
+    position: relative;
+    display: flex;
+    justify-content: center;
+  }
+
+  .vip-emblem {
+    width: 340px;
+    height: 340px;
+    border: 1px solid rgba(200, 149, 42, 0.3);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  .vip-emblem::before {
+    content: '';
+    position: absolute;
+    inset: 16px;
+    border: 1px solid rgba(200, 149, 42, 0.15);
     border-radius: 50%;
   }
 
-  .kpi-label {
-    font-size: 11px; color: var(--muted); font-weight: 500;
-    text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px;
-  }
-  .kpi-value {
-    font-size: 26px; font-weight: 900; color: var(--text);
-    line-height: 1; margin-bottom: 6px;
-  }
-  .kpi-value .currency { font-size: 14px; color: var(--muted); font-weight: 400; margin-right: 3px; }
-  .kpi-badge {
-    display: inline-flex; align-items: center; gap: 4px;
-    font-size: 11px; font-weight: 600; border-radius: 6px; padding: 2px 8px;
-  }
-  .badge-up { background: rgba(46,204,113,.15); color: var(--green); }
-  .badge-down { background: rgba(231,76,60,.15); color: var(--red); }
-  .badge-warn { background: rgba(201,168,76,.15); color: var(--gold); }
-
-  .kpi-icon {
-    position: absolute; bottom: 18px; left: 18px;
-    font-size: 28px; opacity: .18;
+  .vip-emblem::after {
+    content: '';
+    position: absolute;
+    inset: 32px;
+    border: 1px solid rgba(200, 149, 42, 0.08);
+    border-radius: 50%;
   }
 
-  /* ---- TWO COLS ---- */
-  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-bottom: 28px; }
-  @media(max-width:760px){ .two-col { grid-template-columns: 1fr; } }
-
-  /* ---- PANEL ---- */
-  .panel {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 22px;
-  }
-  .panel-title {
-    font-size: 14px; font-weight: 700; margin-bottom: 18px;
-    display: flex; align-items: center; justify-content: space-between;
-  }
-  .panel-title .badge-tag {
-    font-size: 10px; background: var(--gold-dim); color: var(--gold);
-    border-radius: 5px; padding: 2px 8px; font-weight: 600;
+  .vip-emblem-inner {
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, rgba(200, 149, 42, 0.2), rgba(196, 113, 74, 0.1));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Amiri', serif;
+    font-size: 1.2rem;
+    color: var(--gold-light);
+    text-align: center;
+    line-height: 1.6;
+    padding: 20px;
   }
 
-  /* ---- DAILY CLOSE TABLE ---- */
-  .daily-table { width: 100%; border-collapse: collapse; }
-  .daily-table th {
-    font-size: 10px; color: var(--muted); text-transform: uppercase;
-    letter-spacing: 1px; padding: 6px 10px; text-align: right;
-    border-bottom: 1px solid var(--border);
-  }
-  .daily-table td {
-    padding: 10px 10px; font-size: 13px;
-    border-bottom: 1px solid rgba(255,255,255,.04);
-  }
-  .daily-table tr:last-child td { border-bottom: none; }
-  .daily-table tr:hover td { background: rgba(255,255,255,.02); }
-  .amt-pos { color: var(--green); font-weight: 600; }
-  .amt-neg { color: var(--red); font-weight: 600; }
-  .amt-gold { color: var(--gold); font-weight: 700; }
-  .row-total td { border-top: 1px solid var(--border) !important; background: var(--surface2); }
-
-  /* ---- DISH PROFITABILITY ---- */
-  .dish-list { display: flex; flex-direction: column; gap: 10px; }
-  .dish-row { display: flex; align-items: center; gap: 12px; }
-  .dish-name { font-size: 13px; min-width: 110px; }
-  .dish-bar-wrap { flex: 1; background: var(--surface2); border-radius: 4px; height: 8px; overflow: hidden; }
-  .dish-bar { height: 100%; border-radius: 4px; transition: width .8s ease; }
-  .bar-high { background: linear-gradient(90deg, var(--green), #27ae60); }
-  .bar-mid  { background: linear-gradient(90deg, var(--gold), #b8860b); }
-  .bar-low  { background: linear-gradient(90deg, var(--red), #c0392b); }
-  .dish-pct { font-size: 12px; color: var(--muted); min-width: 38px; text-align: left; }
-  .dish-profit { font-size: 12px; font-weight: 600; min-width: 55px; text-align: left; }
-
-  /* ---- FOOD COST GAUGE ---- */
-  .gauge-wrap { display: flex; flex-direction: column; align-items: center; gap: 14px; }
-  .gauge-svg { width: 160px; height: 90px; }
-  .gauge-value { text-align: center; }
-  .gauge-num { font-size: 36px; font-weight: 900; color: var(--gold); }
-  .gauge-label { font-size: 12px; color: var(--muted); }
-  .gauge-status {
-    font-size: 11px; font-weight: 700; letter-spacing: 1px;
-    background: rgba(201,168,76,.15); color: var(--gold);
-    border-radius: 6px; padding: 3px 12px;
+  /* ── SAFETY ── */
+  .safety {
+    background: var(--olive);
+    color: var(--cream);
+    text-align: center;
+    padding: 80px 60px;
   }
 
-  /* ---- BUDGET TRACKER ---- */
-  .budget-list { display: flex; flex-direction: column; gap: 14px; }
-  .budget-item {}
-  .budget-header { display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 13px; }
-  .budget-name { color: var(--text); }
-  .budget-nums { color: var(--muted); font-size: 12px; }
-  .budget-nums strong { color: var(--text); }
-  .budget-bar-bg { background: var(--surface2); border-radius: 6px; height: 6px; overflow: hidden; }
-  .budget-bar-fill { height: 100%; border-radius: 6px; transition: width 1s ease; }
-  .fill-safe { background: var(--green); }
-  .fill-warn { background: var(--gold); }
-  .fill-over { background: var(--red); }
+  .safety .section-title { color: var(--cream); }
+  .safety .section-divider { margin: 0 auto 40px; }
 
-  /* ---- DAILY REPORT CARD ---- */
-  .report-card {
-    background: linear-gradient(135deg, #141820, #0f1217);
-    border: 1px solid var(--gold);
-    border-radius: 14px; padding: 24px;
-    margin-bottom: 28px;
-    position: relative; overflow: hidden;
+  .safety-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 32px;
+    margin-top: 56px;
   }
-  .report-card::before {
-    content:''; position:absolute; inset:0;
-    background: radial-gradient(ellipse 70% 60% at 90% 50%, rgba(201,168,76,.07), transparent);
-    pointer-events: none;
-  }
-  .report-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 20px; }
-  .report-title { font-size: 16px; font-weight: 700; color: var(--gold); }
-  .report-sub { font-size: 12px; color: var(--muted); margin-top: 2px; }
-  .report-stamp {
-    background: var(--gold); color: #0a0c10;
-    font-size: 10px; font-weight: 900; letter-spacing: 2px;
-    border-radius: 5px; padding: 4px 10px;
-  }
-  .report-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
-  @media(max-width:600px){ .report-stats { grid-template-columns: repeat(2,1fr); } }
-  .rs-item { text-align: center; }
-  .rs-num { font-size: 22px; font-weight: 900; }
-  .rs-lbl { font-size: 11px; color: var(--muted); margin-top: 2px; }
-  .divider { height: 1px; background: var(--border); margin: 18px 0; }
 
-  /* ---- ALERT BANNER ---- */
-  .alert-banner {
-    border-radius: 10px; padding: 12px 18px; margin-bottom: 14px;
-    display: flex; align-items: center; gap: 12px; font-size: 13px;
+  .safety-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
   }
-  .alert-warn { background: rgba(201,168,76,.1); border: 1px solid rgba(201,168,76,.3); color: var(--gold-light); }
-  .alert-danger { background: rgba(231,76,60,.1); border: 1px solid rgba(231,76,60,.3); color: #f1948a; }
-  .alert-ok { background: rgba(46,204,113,.1); border: 1px solid rgba(46,204,113,.3); color: #82e0aa; }
-  .alert-icon { font-size: 16px; flex-shrink:0; }
 
-  /* ---- INPUT FORM ---- */
-  .input-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-bottom: 16px; }
-  .input-group { display: flex; flex-direction: column; gap: 5px; }
-  .input-group label { font-size: 11px; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: .8px; }
-  .input-group input {
-    background: var(--surface2); border: 1px solid var(--border);
-    border-radius: 8px; padding: 9px 12px; color: var(--text);
-    font-family: 'Cairo', sans-serif; font-size: 14px;
-    transition: border-color .2s;
-    direction: ltr; text-align: right;
+  .safety-icon {
+    width: 72px;
+    height: 72px;
+    background: rgba(255,255,255,0.12);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
   }
-  .input-group input:focus { outline: none; border-color: var(--gold); }
-  .input-group input::placeholder { color: var(--muted); font-size: 12px; }
 
-  .btn-primary {
-    background: linear-gradient(135deg, var(--gold), #8b6914);
-    color: #0a0c10; border: none; border-radius: 10px;
-    padding: 11px 28px; font-family: 'Cairo', sans-serif;
-    font-size: 14px; font-weight: 700; cursor: pointer;
-    transition: opacity .2s, transform .15s;
+  .safety-label {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: rgba(245, 237, 216, 0.85);
+    text-align: center;
   }
-  .btn-primary:hover { opacity:.9; transform: translateY(-1px); }
-  .btn-secondary {
-    background: var(--surface2); color: var(--text); border: 1px solid var(--border);
-    border-radius: 10px; padding: 11px 20px; font-family: 'Cairo', sans-serif;
-    font-size: 14px; cursor: pointer; transition: border-color .2s;
-  }
-  .btn-secondary:hover { border-color: var(--gold); }
-  .btn-row { display: flex; gap: 10px; flex-wrap: wrap; }
 
-  /* ---- WEEKLY CHART (CSS bars) ---- */
-  .week-chart { display: flex; align-items: flex-end; gap: 10px; height: 100px; padding-top: 10px; }
-  .week-bar-wrap { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 6px; }
-  .week-bar {
-    width: 100%; border-radius: 6px 6px 0 0;
-    background: linear-gradient(180deg, var(--gold-light), var(--gold));
-    transition: height .8s cubic-bezier(.4,0,.2,1);
-    position: relative; cursor: pointer;
+  /* ── BOOKING ── */
+  .booking {
+    background: var(--cream);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
   }
-  .week-bar.revenue { background: linear-gradient(180deg, #5dade2, #2980b9); }
-  .week-bar.profit  { background: linear-gradient(180deg, #82e0aa, #27ae60); }
-  .week-day { font-size: 11px; color: var(--muted); }
-  .week-legend { display: flex; gap: 16px; margin-top: 12px; }
-  .wl-item { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--muted); }
-  .wl-dot { width: 10px; height: 10px; border-radius: 3px; }
 
-  /* ---- ANIMATE IN ---- */
+  .booking-info { padding-top: 10px; }
+
+  .booking-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    margin-top: 36px;
+  }
+
+  .step {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+  }
+
+  .step-num {
+    width: 40px;
+    height: 40px;
+    background: var(--clay);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Amiri', serif;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+  }
+
+  .step-content { flex: 1; }
+
+  .step-title {
+    font-weight: 700;
+    color: var(--charcoal);
+    margin-bottom: 4px;
+    font-size: 0.95rem;
+  }
+
+  .step-desc {
+    font-size: 0.85rem;
+    color: rgba(42, 33, 24, 0.6);
+    line-height: 1.6;
+  }
+
+  .booking-form {
+    background: white;
+    border-radius: 4px;
+    padding: 44px;
+    box-shadow: 0 8px 48px rgba(42, 33, 24, 0.1);
+  }
+
+  .form-title {
+    font-family: 'Amiri', serif;
+    font-size: 1.8rem;
+    color: var(--charcoal);
+    margin-bottom: 32px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--parchment);
+  }
+
+  .form-group {
+    margin-bottom: 22px;
+  }
+
+  .form-label {
+    display: block;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--charcoal);
+    margin-bottom: 8px;
+    letter-spacing: 0.5px;
+  }
+
+  .form-control {
+    width: 100%;
+    padding: 13px 16px;
+    border: 1px solid var(--parchment);
+    border-radius: 2px;
+    font-family: 'Tajawal', sans-serif;
+    font-size: 0.92rem;
+    color: var(--charcoal);
+    background: var(--smoke);
+    transition: border-color 0.2s;
+    outline: none;
+    appearance: none;
+  }
+
+  .form-control:focus { border-color: var(--clay); }
+
+  select.form-control { cursor: pointer; }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .form-submit {
+    width: 100%;
+    padding: 16px;
+    background: var(--clay);
+    color: var(--cream);
+    border: none;
+    border-radius: 2px;
+    font-family: 'Tajawal', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.25s;
+    margin-top: 8px;
+    letter-spacing: 0.5px;
+  }
+
+  .form-submit:hover { background: var(--earth); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #1A1410;
+    color: var(--cream);
+    padding: 60px 60px 32px;
+  }
+
+  .footer-top {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 60px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid rgba(245, 237, 216, 0.1);
+    margin-bottom: 32px;
+  }
+
+  .footer-logo {
+    font-family: 'Amiri', serif;
+    font-size: 2.8rem;
+    color: var(--gold-light);
+    margin-bottom: 14px;
+  }
+
+  .footer-tagline {
+    font-size: 0.88rem;
+    color: rgba(245, 237, 216, 0.5);
+    line-height: 1.7;
+    max-width: 280px;
+  }
+
+  .footer-col-title {
+    font-weight: 700;
+    font-size: 0.82rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--clay);
+    margin-bottom: 20px;
+  }
+
+  .footer-links {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .footer-links a {
+    color: rgba(245, 237, 216, 0.6);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.2s;
+  }
+
+  .footer-links a:hover { color: var(--cream); }
+
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.8rem;
+    color: rgba(245, 237, 216, 0.35);
+  }
+
+  /* ── ANIMATIONS ── */
   @keyframes fadeUp {
-    from { opacity:0; transform: translateY(20px); }
-    to   { opacity:1; transform: translateY(0); }
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
   }
-  .kpi-card, .panel, .report-card, .alert-banner {
-    animation: fadeUp .5s ease both;
-  }
-  .kpi-card:nth-child(1){ animation-delay:.05s }
-  .kpi-card:nth-child(2){ animation-delay:.1s }
-  .kpi-card:nth-child(3){ animation-delay:.15s }
-  .kpi-card:nth-child(4){ animation-delay:.2s }
-  .kpi-card:nth-child(5){ animation-delay:.25s }
 
-  /* ---- TABS ---- */
-  .tabs { display: flex; gap: 6px; margin-bottom: 20px; }
-  .tab {
-    padding: 7px 18px; border-radius: 8px; font-size: 13px; font-weight: 600;
-    cursor: pointer; border: 1px solid var(--border);
-    background: var(--surface); color: var(--muted);
-    transition: all .2s;
+  @keyframes bounce {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(8px); }
   }
-  .tab.active { background: var(--gold-dim); border-color: var(--gold); color: var(--gold); }
-  .tab-content { display: none; }
-  .tab-content.active { display: block; }
 
-  /* scroll */
-  ::-webkit-scrollbar { width: 6px; }
-  ::-webkit-scrollbar-track { background: var(--bg); }
-  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+  /* ── DISH COLOR BACKGROUNDS ── */
+  .bg-mansaf { background: linear-gradient(135deg, #8B4F2E, #C4714A); }
+  .bg-musakhan { background: linear-gradient(135deg, #5C6B3A, #8A9A5B); }
+  .bg-maqlouba { background: linear-gradient(135deg, #C8952A, #E8B84B); }
+  .bg-knafeh { background: linear-gradient(135deg, #B85C38, #D4784A); }
+  .bg-freekeh { background: linear-gradient(135deg, #4A6741, #6B9163); }
+  .bg-mujaddara { background: linear-gradient(135deg, #6B4226, #8B5A34); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    nav { padding: 16px 24px; }
+    .nav-links { display: none; }
+    section { padding: 70px 24px; }
+    .hero-content { padding: 0 24px; }
+    .hero h1 { font-size: 3rem; }
+    .about, .vip-inner, .booking { grid-template-columns: 1fr; }
+    .packages { grid-template-columns: 1fr; }
+    .safety-grid { grid-template-columns: repeat(2, 1fr); }
+    .footer-top { grid-template-columns: 1fr; gap: 30px; }
+    .footer { padding: 40px 24px 24px; }
+    .vip { padding: 70px 24px; }
+    .vip-emblem { width: 240px; height: 240px; }
+  }
 </style>
 </head>
 <body>
 
-<header>
-  <div class="logo">
-    <div class="logo-icon">🍽️</div>
-    <div>
-      <div class="logo-text">مركز المال</div>
-      <div class="logo-sub">إدارة مالية للمطاعم</div>
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">اطبخ طبقك الفلسطيني</div>
+  <ul class="nav-links">
+    <li><a href="#about">عن المطعم</a></li>
+    <li><a href="#experience">اطبخ طبقك</a></li>
+    <li><a href="#menu">قائمة الأطباق</a></li>
+    <li><a href="#vip">VIP</a></li>
+    <li><a href="#booking" class="nav-cta">احجز الآن</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-pattern"></div>
+  <div class="hero-content">
+    <span class="hero-tag">تراث أصيل · طعم حقيقي</span>
+    <h1>حيث تعيش<br><span>روح فلسطين</span><br>على المائدة</h1>
+    <p class="hero-sub">مطعم مقام يحتضن تراث كل مدينة فلسطينية بنكهاتها الأصيلة، ويدعوك لتكون جزءاً من القصة — في تجربة طبخ لا تُنسى.</p>
+    <div class="hero-btns">
+      <a href="#booking" class="btn-primary">احجز تجربتك</a>
+      <a href="#experience" class="btn-outline">اكتشف الباقات</a>
     </div>
   </div>
-  <div class="header-date" id="headerDate">
-    الجمعة <span>٣ أبريل ٢٠٢٦</span>
+  <div class="hero-scroll">
+    <div class="hero-scroll-line"></div>
+    <span>تمرير</span>
   </div>
-</header>
+</section>
 
-<div class="wrapper">
-
-  <!-- ALERTS -->
-  <div id="alerts-section">
-    <div class="alert-banner alert-warn">
-      <span class="alert-icon">⚠️</span>
-      <span>نسبة تكلفة الطعام وصلت لـ <strong>34%</strong> — القيمة المثلى أقل من 32%. راجع طلبيات اليوم.</span>
-    </div>
-    <div class="alert-banner alert-ok">
-      <span class="alert-icon">✅</span>
-      <span>إقفال أمس مكتمل — الفرق بين الصندوق الفعلي والنظام: <strong>0 ₪</strong></span>
-    </div>
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-content">
+    <span class="section-tag">من نحن</span>
+    <h2 class="section-title">مطعم <span>اطبخ طبقك الفلسطيني</span></h2>
+    <div class="section-divider"></div>
+    <p class="about-text">
+      اطبخ طبقك الفلسطيني ليس مجرد مطعم — بل هو رحلة عبر الزمن والجغرافيا الفلسطينية. نقدّم أطباقاً تراثية أصيلة من حيفا ونابلس والقدس والخليل وغزة وغيرها، محافظين على كل نكهة وطريقة طهي توارثتها الأجيال.
+    </p>
+    <p class="about-text">
+      يُفتح أبوابنا كل يوم خميس لتجربة فريدة من نوعها: "اطبخ طبقك الفلسطيني" — حيث تصبح أنت الشيف، بإشراف مباشر وقصة تراثية حقيقية.
+    </p>
   </div>
-
-  <!-- KPI CARDS -->
-  <div class="section-title" style="margin-top:20px">مؤشرات اليوم</div>
-  <div class="kpi-grid" id="kpiGrid">
-    <div class="kpi-card">
-      <div class="kpi-label">المبيعات الإجمالية</div>
-      <div class="kpi-value"><span class="currency">₪</span><span id="kpi-sales">3,840</span></div>
-      <div class="kpi-badge badge-up">▲ 12% عن أمس</div>
-      <div class="kpi-icon">💰</div>
-    </div>
-    <div class="kpi-card">
-      <div class="kpi-label">تكلفة الطعام</div>
-      <div class="kpi-value"><span class="currency">₪</span><span id="kpi-food">1,306</span></div>
-      <div class="kpi-badge badge-warn">34% من المبيعات</div>
-      <div class="kpi-icon">🥗</div>
-    </div>
-    <div class="kpi-card">
-      <div class="kpi-label">الرواتب اليوم</div>
-      <div class="kpi-value"><span class="currency">₪</span><span id="kpi-salary">620</span></div>
-      <div class="kpi-badge badge-up">ضمن الميزانية</div>
-      <div class="kpi-icon">👥</div>
-    </div>
-    <div class="kpi-card">
-      <div class="kpi-label">صافي الربح</div>
-      <div class="kpi-value"><span class="currency">₪</span><span id="kpi-profit">1,914</span></div>
-      <div class="kpi-badge badge-up">▲ 49.8%</div>
-      <div class="kpi-icon">📈</div>
-    </div>
-    <div class="kpi-card">
-      <div class="kpi-label">عدد الطلبات</div>
-      <div class="kpi-value"><span id="kpi-orders">127</span></div>
-      <div class="kpi-badge badge-up">متوسط ₪30.2</div>
-      <div class="kpi-icon">🧾</div>
+  <div class="about-visual">
+    <div class="about-frame">🫕</div>
+    <div class="about-badge">
+      <span class="num">٢٠٠+</span>
+      وصفة تراثية
     </div>
   </div>
+</section>
 
-  <!-- TABS -->
-  <div class="tabs">
-    <div class="tab active" onclick="switchTab('daily')">إقفال يومي</div>
-    <div class="tab" onclick="switchTab('dishes')">ربحية الأصناف</div>
-    <div class="tab" onclick="switchTab('budget')">الميزانية الشهرية</div>
-    <div class="tab" onclick="switchTab('weekly')">التقرير الأسبوعي</div>
+<!-- EXPERIENCE -->
+<section class="experience" id="experience">
+  <div class="experience-header">
+    <span class="section-tag">كل خميس</span>
+    <h2 class="section-title">اطبخ طبقك<br><span>الفلسطيني</span></h2>
+    <div class="section-divider"></div>
+    <p style="font-size:1rem;color:rgba(42,33,24,0.7);line-height:1.8;">اختر باقتك، احجز مكانك، وابدأ رحلتك في مطبخ التراث الفلسطيني مع إشراف مباشر من شيفاتنا المتخصصين.</p>
   </div>
 
-  <!-- TAB: DAILY CLOSE -->
-  <div class="tab-content active" id="tab-daily">
-    <div class="report-card">
-      <div class="report-header">
+  <div class="packages">
+
+    <!-- BASIC -->
+    <div class="package-card">
+      <div class="package-header">
+        <span class="package-icon">🍲</span>
+        <div class="package-name">الباقة الأساسية</div>
+        <div class="package-sub">للفرد — تجربة فردية كاملة</div>
+      </div>
+      <div class="package-price">
         <div>
-          <div class="report-title">📋 إقفال الصندوق — اليومي</div>
-          <div class="report-sub">الجمعة ٣ أبريل ٢٠٢٦</div>
+          <span class="price-currency">₪</span>
+          <span class="price-amount">85</span>
         </div>
-        <div class="report-stamp">مؤكّد ✓</div>
+        <span class="price-per">للشخص الواحد</span>
       </div>
-      <div class="report-stats">
-        <div class="rs-item"><div class="rs-num" style="color:var(--green)">₪3,840</div><div class="rs-lbl">إجمالي الدخل</div></div>
-        <div class="rs-item"><div class="rs-num" style="color:var(--red)">₪1,926</div><div class="rs-lbl">إجمالي المصاريف</div></div>
-        <div class="rs-item"><div class="rs-num" style="color:var(--gold)">₪1,914</div><div class="rs-lbl">صافي الربح</div></div>
-        <div class="rs-item"><div class="rs-num" style="color:var(--blue)">49.8%</div><div class="rs-lbl">هامش الربح</div></div>
+      <div class="package-body">
+        <div class="package-duration">⏱ مدة التجربة: ساعتان</div>
+        <ul class="package-features">
+          <li>رسوم الدخول والمواد الخام</li>
+          <li>إشراف مباشر من شيف متخصص</li>
+          <li>طبق واحد من قائمة محددة مسبقاً</li>
+          <li>وصفة مكتوبة هدية</li>
+          <li>معايير نظافة وسلامة غذائية كاملة</li>
+        </ul>
+        <button class="btn-book" onclick="document.getElementById('booking').scrollIntoView({behavior:'smooth'})">احجز الآن</button>
       </div>
     </div>
 
-    <div class="panel">
-      <div class="panel-title">تفاصيل الإقفال <span class="badge-tag">يومي</span></div>
-      <table class="daily-table">
-        <thead>
-          <tr>
-            <th>البند</th>
-            <th>المبلغ (₪)</th>
-            <th>النوع</th>
-            <th>ملاحظة</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><td>مبيعات الطعام</td><td class="amt-pos">+3,500</td><td>دخل</td><td>127 طلب</td></tr>
-          <tr><td>مبيعات المشروبات</td><td class="amt-pos">+340</td><td>دخل</td><td>—</td></tr>
-          <tr><td>خصومات وعروض</td><td class="amt-neg">-80</td><td>خصم</td><td>عرض نهاية الأسبوع</td></tr>
-          <tr><td>تكلفة المواد الخام</td><td class="amt-neg">-1,306</td><td>مصروف</td><td>34% — يجب مراجعة</td></tr>
-          <tr><td>رواتب الموظفين</td><td class="amt-neg">-620</td><td>مصروف</td><td>ضمن الميزانية</td></tr>
-          <tr class="row-total"><td><strong>صافي اليوم</strong></td><td class="amt-gold">+1,914</td><td>—</td><td>هامش 49.8%</td></tr>
-        </tbody>
-      </table>
+    <!-- FAMILY -->
+    <div class="package-card featured">
+      <div class="package-badge-top">الأكثر طلباً</div>
+      <div class="package-header">
+        <span class="package-icon">👨‍👩‍👧‍👦</span>
+        <div class="package-name">الباقة العائلية</div>
+        <div class="package-sub">للعائلة أو مجموعة الأصدقاء</div>
+      </div>
+      <div class="package-price">
+        <div>
+          <span class="price-currency">₪</span>
+          <span class="price-amount">320</span>
+        </div>
+        <span class="price-per">للمجموعة (4–6 أشخاص)</span>
+      </div>
+      <div class="package-body">
+        <div class="package-duration">⏱ مدة التجربة: ٣ ساعات</div>
+        <ul class="package-features">
+          <li>جميع المواد الخام لـ 4-6 أشخاص</li>
+          <li>شيف مخصص للمجموعة</li>
+          <li>طبقان رئيسيان + حلوى تراثية</li>
+          <li>جولة في تراث المدن الفلسطينية</li>
+          <li>تصوير خاص بالتجربة</li>
+          <li>كتيب وصفات هدية للمجموعة</li>
+        </ul>
+        <button class="btn-book" onclick="document.getElementById('booking').scrollIntoView({behavior:'smooth'})">احجز الآن</button>
+      </div>
     </div>
 
-    <div style="margin-top:18px">
-      <div class="section-title">تسجيل مصروف جديد</div>
-      <div class="panel">
-        <div class="input-grid">
-          <div class="input-group">
-            <label>البند</label>
-            <input type="text" id="exp-name" placeholder="مثال: صيانة ثلاجة">
-          </div>
-          <div class="input-group">
-            <label>المبلغ (₪)</label>
-            <input type="number" id="exp-amount" placeholder="0.00">
-          </div>
-          <div class="input-group">
-            <label>التصنيف</label>
-            <input type="text" id="exp-cat" placeholder="صيانة / مواد / غير ذلك">
-          </div>
+    <!-- VIP -->
+    <div class="package-card">
+      <div class="package-header">
+        <span class="package-icon">⭐</span>
+        <div class="package-name">باقة VIP</div>
+        <div class="package-sub">تجربة راقية مع قصة تراثية</div>
+      </div>
+      <div class="package-price">
+        <div>
+          <span class="price-currency">₪</span>
+          <span class="price-amount">180</span>
         </div>
-        <div class="btn-row">
-          <button class="btn-primary" onclick="addExpense()">➕ إضافة مصروف</button>
-          <button class="btn-secondary" onclick="printReport()">🖨️ طباعة التقرير</button>
-        </div>
-        <div id="expense-log" style="margin-top:14px;display:none;"></div>
+        <span class="price-per">للشخص — الحد الأقصى ٤ أشخاص</span>
+      </div>
+      <div class="package-body">
+        <div class="package-duration">⏱ مدة التجربة: ٤ ساعات</div>
+        <ul class="package-features">
+          <li>قصة تراثية كاملة عن أصل الطبق والمدينة</li>
+          <li>شيف كبير مخصص حصرياً</li>
+          <li>٣ أطباق تراثية + مشروبات أصيلة</li>
+          <li>مكان مخصص مُزيَّن بالزليج والتراث</li>
+          <li>شهادة "شيف تراثي" باسمك</li>
+          <li>تصوير احترافي للتجربة</li>
+        </ul>
+        <button class="btn-book" onclick="document.getElementById('booking').scrollIntoView({behavior:'smooth'})">احجز الآن</button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- MENU -->
+<section class="menu" id="menu">
+  <span class="section-tag">قائمة الأطباق</span>
+  <h2 class="section-title">أطباق من <span>قلب فلسطين</span></h2>
+  <div class="section-divider"></div>
+
+  <div class="cities-nav">
+    <button class="city-btn active">الكل</button>
+    <button class="city-btn">نابلس</button>
+    <button class="city-btn">القدس</button>
+    <button class="city-btn">الخليل</button>
+    <button class="city-btn">حيفا</button>
+    <button class="city-btn">غزة</button>
+    <button class="city-btn">الجليل</button>
+    <button class="city-btn">يافا</button>
+  </div>
+
+  <div class="dishes-grid">
+    <div class="dish-card">
+      <div class="dish-img bg-mansaf">🍖<span class="dish-city-tag">الخليل</span></div>
+      <div class="dish-info">
+        <div class="dish-name">المنسف الخليلي</div>
+        <div class="dish-desc">لحم الخروف مع الجميد والأرز المطبوخ بالسمن البلدي</div>
+      </div>
+    </div>
+    <div class="dish-card">
+      <div class="dish-img bg-musakhan">🫓<span class="dish-city-tag">طولكرم</span></div>
+      <div class="dish-info">
+        <div class="dish-name">المسخن الأصيل</div>
+        <div class="dish-desc">الدجاج مع البصل والزيت والسماق على خبز الطابون</div>
+      </div>
+    </div>
+    <div class="dish-card">
+      <div class="dish-img bg-maqlouba">🥘<span class="dish-city-tag">الجليل</span></div>
+      <div class="dish-info">
+        <div class="dish-name">المقلوبة الجليلية</div>
+        <div class="dish-desc">أرز مع خضروات ولحم بهارات خاصة تقلب على الطبق</div>
+      </div>
+    </div>
+    <div class="dish-card">
+      <div class="dish-img bg-knafeh">🍯<span class="dish-city-tag">نابلس</span></div>
+      <div class="dish-info">
+        <div class="dish-name">الكنافة النابلسية</div>
+        <div class="dish-desc">عجين الكنافة مع الجبنة البيضاء والقطر وماء الزهر</div>
+      </div>
+    </div>
+    <div class="dish-card">
+      <div class="dish-img bg-freekeh">🌿<span class="dish-city-tag">القدس</span></div>
+      <div class="dish-info">
+        <div class="dish-name">الفريكة المقدسية</div>
+        <div class="dish-desc">حبوب القمح المحمصة مع الدجاج والبهارات المقدسية</div>
+      </div>
+    </div>
+    <div class="dish-card">
+      <div class="dish-img bg-mujaddara">🫘<span class="dish-city-tag">غزة</span></div>
+      <div class="dish-info">
+        <div class="dish-name">الفول الغزي</div>
+        <div class="dish-desc">فول مدمس بزيت الزيتون والبصل المقلي والبهارات الحارة</div>
       </div>
     </div>
   </div>
+</section>
 
-  <!-- TAB: DISHES -->
-  <div class="tab-content" id="tab-dishes">
-    <div class="two-col">
-      <div class="panel">
-        <div class="panel-title">ربحية كل صنف <span class="badge-tag">هامش الربح</span></div>
-        <div class="dish-list">
-          <div class="dish-row">
-            <div class="dish-name">مشاوي مشكّلة</div>
-            <div class="dish-bar-wrap"><div class="dish-bar bar-high" style="width:78%"></div></div>
-            <div class="dish-pct">78%</div>
-            <div class="dish-profit" style="color:var(--green)">₪22 ربح</div>
+<!-- VIP EXPERIENCE -->
+<section class="vip" id="vip">
+  <div class="vip-pattern"></div>
+  <div class="vip-inner">
+    <div class="vip-content">
+      <span class="section-tag">الباقة المميزة</span>
+      <h2 class="section-title">تجربة <span>VIP</span><br>مع تراث المدينة</h2>
+      <div class="section-divider"></div>
+      <p class="vip-text">
+        ليست مجرد وجبة — بل رحلة عبر التاريخ. في تجربة VIP، يحكي لك شيفنا الكبير قصة كل طبق وأصله، والمدينة الفلسطينية التي ينتمي إليها، قبل أن تبدأ طهيه بيدك.
+      </p>
+      <div class="vip-features">
+        <div class="vip-feature">
+          <div class="vip-feature-icon">📖</div>
+          <div class="vip-feature-text">
+            <div class="vip-feature-title">قصة تراثية موثقة</div>
+            <div class="vip-feature-desc">تاريخ الطبق، أصوله، والمدينة الفلسطينية المرتبطة به</div>
           </div>
-          <div class="dish-row">
-            <div class="dish-name">برغر مميز</div>
-            <div class="dish-bar-wrap"><div class="dish-bar bar-high" style="width:65%"></div></div>
-            <div class="dish-pct">65%</div>
-            <div class="dish-profit" style="color:var(--green)">₪19 ربح</div>
+        </div>
+        <div class="vip-feature">
+          <div class="vip-feature-icon">👨‍🍳</div>
+          <div class="vip-feature-text">
+            <div class="vip-feature-title">شيف كبير مخصص</div>
+            <div class="vip-feature-desc">إشراف فردي من خبير بالمطبخ الفلسطيني الأصيل</div>
           </div>
-          <div class="dish-row">
-            <div class="dish-name">سلطة فتوش</div>
-            <div class="dish-bar-wrap"><div class="dish-bar bar-high" style="width:71%"></div></div>
-            <div class="dish-pct">71%</div>
-            <div class="dish-profit" style="color:var(--green)">₪11 ربح</div>
+        </div>
+        <div class="vip-feature">
+          <div class="vip-feature-icon">⏱</div>
+          <div class="vip-feature-text">
+            <div class="vip-feature-title">زمن مخصص للمجموعة</div>
+            <div class="vip-feature-desc">٤ ساعات كاملة في مكان خاص ومُزيَّن بالتراث</div>
           </div>
-          <div class="dish-row">
-            <div class="dish-name">عصائر طازجة</div>
-            <div class="dish-bar-wrap"><div class="dish-bar bar-mid" style="width:52%"></div></div>
-            <div class="dish-pct">52%</div>
-            <div class="dish-profit" style="color:var(--gold)">₪7 ربح</div>
-          </div>
-          <div class="dish-row">
-            <div class="dish-name">سمك مشوي</div>
-            <div class="dish-bar-wrap"><div class="dish-bar bar-mid" style="width:41%"></div></div>
-            <div class="dish-pct">41%</div>
-            <div class="dish-profit" style="color:var(--gold)">₪14 ربح</div>
-          </div>
-          <div class="dish-row">
-            <div class="dish-name">بيتزا عائلية</div>
-            <div class="dish-bar-wrap"><div class="dish-bar bar-low" style="width:28%"></div></div>
-            <div class="dish-pct">28%</div>
-            <div class="dish-profit" style="color:var(--red)">₪8 ربح</div>
-          </div>
-          <div class="dish-row">
-            <div class="dish-name">حلويات شرقية</div>
-            <div class="dish-bar-wrap"><div class="dish-bar bar-low" style="width:22%"></div></div>
-            <div class="dish-pct">22%</div>
-            <div class="dish-profit" style="color:var(--red)">₪3 ربح</div>
+        </div>
+        <div class="vip-feature">
+          <div class="vip-feature-icon">🎖</div>
+          <div class="vip-feature-text">
+            <div class="vip-feature-title">شهادة شيف تراثي</div>
+            <div class="vip-feature-desc">شهادة باسمك تُثبت إتقانك لطبق من التراث الفلسطيني</div>
           </div>
         </div>
       </div>
-
-      <div class="panel">
-        <div class="panel-title">نسبة تكلفة الطعام (Food Cost) <span class="badge-tag">تحذير</span></div>
-        <div class="gauge-wrap">
-          <svg class="gauge-svg" viewBox="0 0 160 90">
-            <!-- track -->
-            <path d="M15,85 A75,75 0 0,1 145,85" fill="none" stroke="#1e2530" stroke-width="12" stroke-linecap="round"/>
-            <!-- fill: 34% of 180deg arc -->
-            <path d="M15,85 A75,75 0 0,1 145,85" fill="none" stroke="url(#gGrad)" stroke-width="12" stroke-linecap="round"
-              stroke-dasharray="236" stroke-dashoffset="156"/>
-            <defs>
-              <linearGradient id="gGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stop-color="#27ae60"/>
-                <stop offset="60%" stop-color="#c9a84c"/>
-                <stop offset="100%" stop-color="#e74c3c"/>
-              </linearGradient>
-            </defs>
-          </svg>
-          <div class="gauge-value">
-            <div class="gauge-num">34%</div>
-            <div class="gauge-label">الهدف: أقل من 32%</div>
-          </div>
-          <div class="gauge-status">⚠ يحتاج مراجعة</div>
-        </div>
-        <div class="divider"></div>
-        <div style="font-size:12px;color:var(--muted);line-height:1.7">
-          📌 <strong style="color:var(--text)">نصيحة:</strong> راجع الأصناف ذات الربحية المنخفضة كالبيتزا والحلويات — يمكن رفع سعرها أو تقليل مكوناتها لتحسين الهامش.
-        </div>
-      </div>
+      <a href="#booking" class="btn-primary">احجز تجربة VIP</a>
     </div>
-
-    <div class="panel">
-      <div class="panel-title">إضافة صنف جديد وحساب ربحيته</div>
-      <div class="input-grid">
-        <div class="input-group"><label>اسم الصنف</label><input type="text" id="dish-name" placeholder="مثال: شاورما دجاج"></div>
-        <div class="input-group"><label>سعر البيع (₪)</label><input type="number" id="dish-price" placeholder="35"></div>
-        <div class="input-group"><label>تكلفة المواد (₪)</label><input type="number" id="dish-cost" placeholder="12"></div>
-      </div>
-      <div class="btn-row">
-        <button class="btn-primary" onclick="calcDish()">🔢 احسب الربحية</button>
-      </div>
-      <div id="dish-result" style="margin-top:14px;display:none;" class="alert-banner alert-ok"></div>
-    </div>
-  </div>
-
-  <!-- TAB: BUDGET -->
-  <div class="tab-content" id="tab-budget">
-    <div class="two-col">
-      <div class="panel">
-        <div class="panel-title">الميزانية الشهرية — أبريل ٢٠٢٦ <span class="badge-tag">أسبوعان مضيا</span></div>
-        <div class="budget-list">
-          <div class="budget-item">
-            <div class="budget-header">
-              <span class="budget-name">🥩 المواد الغذائية</span>
-              <span class="budget-nums"><strong>₪18,400</strong> / ₪28,000</span>
-            </div>
-            <div class="budget-bar-bg"><div class="budget-bar-fill fill-safe" style="width:65%"></div></div>
-          </div>
-          <div class="budget-item">
-            <div class="budget-header">
-              <span class="budget-name">👥 الرواتب</span>
-              <span class="budget-nums"><strong>₪9,200</strong> / ₪12,000</span>
-            </div>
-            <div class="budget-bar-bg"><div class="budget-bar-fill fill-safe" style="width:77%"></div></div>
-          </div>
-          <div class="budget-item">
-            <div class="budget-header">
-              <span class="budget-name">🏠 الإيجار</span>
-              <span class="budget-nums"><strong>₪4,500</strong> / ₪4,500</span>
-            </div>
-            <div class="budget-bar-bg"><div class="budget-bar-fill fill-warn" style="width:100%"></div></div>
-          </div>
-          <div class="budget-item">
-            <div class="budget-header">
-              <span class="budget-name">⚡ الكهرباء والماء</span>
-              <span class="budget-nums"><strong>₪2,100</strong> / ₪2,500</span>
-            </div>
-            <div class="budget-bar-bg"><div class="budget-bar-fill fill-warn" style="width:84%"></div></div>
-          </div>
-          <div class="budget-item">
-            <div class="budget-header">
-              <span class="budget-name">🔧 الصيانة</span>
-              <span class="budget-nums"><strong>₪1,850</strong> / ₪1,500</span>
-            </div>
-            <div class="budget-bar-bg"><div class="budget-bar-fill fill-over" style="width:100%"></div></div>
-          </div>
-          <div class="budget-item">
-            <div class="budget-header">
-              <span class="budget-name">📦 مواد تغليف</span>
-              <span class="budget-nums"><strong>₪740</strong> / ₪1,200</span>
-            </div>
-            <div class="budget-bar-bg"><div class="budget-bar-fill fill-safe" style="width:62%"></div></div>
-          </div>
+    <div class="vip-visual">
+      <div class="vip-emblem">
+        <div class="vip-emblem-inner">
+          تجربة<br>VIP<br>فلسطينية<br>أصيلة
         </div>
-        <div class="divider"></div>
-        <div class="alert-banner alert-danger" style="margin:0">
-          <span class="alert-icon">🔴</span>
-          <span>الصيانة تجاوزت الميزانية بـ <strong>₪350</strong> — يجب الموافقة على أي مصروف إضافي</span>
-        </div>
-      </div>
-
-      <div class="panel">
-        <div class="panel-title">تحديث الميزانية</div>
-        <div style="display:flex;flex-direction:column;gap:12px">
-          <div class="input-group"><label>البند</label><input type="text" id="bud-name" placeholder="اسم البند"></div>
-          <div class="input-group"><label>الميزانية المخصصة (₪)</label><input type="number" id="bud-limit" placeholder="0"></div>
-          <div class="input-group"><label>المصروف حتى الآن (₪)</label><input type="number" id="bud-spent" placeholder="0"></div>
-          <button class="btn-primary" onclick="addBudget()">➕ إضافة بند</button>
-        </div>
-        <div id="bud-result" style="margin-top:12px;display:none;" class="alert-banner"></div>
       </div>
     </div>
   </div>
+</section>
 
-  <!-- TAB: WEEKLY -->
-  <div class="tab-content" id="tab-weekly">
-    <div class="panel" style="margin-bottom:18px">
-      <div class="panel-title">الأداء الأسبوعي — الأسبوع الأول أبريل <span class="badge-tag">أسبوعي</span></div>
-      <div class="week-chart" id="weekChart"></div>
-      <div class="week-legend">
-        <div class="wl-item"><div class="wl-dot" style="background:#2980b9"></div>المبيعات</div>
-        <div class="wl-item"><div class="wl-dot" style="background:#27ae60"></div>الربح</div>
-      </div>
+<!-- SAFETY -->
+<section class="safety">
+  <span class="section-tag">الجودة والسلامة</span>
+  <h2 class="section-title">معايير <span style="color:var(--gold-light)">السلامة الغذائية</span></h2>
+  <div class="section-divider"></div>
+  <p style="font-size:0.95rem;color:rgba(245,237,216,0.75);max-width:500px;margin:0 auto;line-height:1.8;">نلتزم بأعلى معايير النظافة والسلامة الغذائية لضمان تجربة آمنة وممتعة لكل زبائننا</p>
+
+  <div class="safety-grid">
+    <div class="safety-item">
+      <div class="safety-icon">🧼</div>
+      <div class="safety-label">معدات معقمة ومغسولة<br>قبل كل جلسة</div>
     </div>
+    <div class="safety-item">
+      <div class="safety-icon">🧤</div>
+      <div class="safety-label">قفازات وأدوات وقاية<br>للجميع</div>
+    </div>
+    <div class="safety-item">
+      <div class="safety-icon">🌡</div>
+      <div class="safety-label">مراقبة درجات الحرارة<br>والطهي الآمن</div>
+    </div>
+    <div class="safety-item">
+      <div class="safety-icon">📋</div>
+      <div class="safety-label">شهادات صحية معتمدة<br>لكل الشيفات</div>
+    </div>
+  </div>
+</section>
 
-    <div class="two-col">
-      <div class="panel">
-        <div class="panel-title">ملخص الأسبوع</div>
-        <table class="daily-table">
-          <thead><tr><th>اليوم</th><th>مبيعات</th><th>ربح</th><th>الحالة</th></tr></thead>
-          <tbody>
-            <tr><td>السبت</td><td class="amt-pos">₪3,200</td><td class="amt-pos">₪1,540</td><td><span class="kpi-badge badge-up">جيد</span></td></tr>
-            <tr><td>الأحد</td><td class="amt-pos">₪2,850</td><td class="amt-pos">₪1,280</td><td><span class="kpi-badge badge-up">جيد</span></td></tr>
-            <tr><td>الاثنين</td><td class="amt-pos">₪2,100</td><td class="amt-pos">₪900</td><td><span class="kpi-badge badge-warn">متوسط</span></td></tr>
-            <tr><td>الثلاثاء</td><td class="amt-pos">₪3,500</td><td class="amt-pos">₪1,700</td><td><span class="kpi-badge badge-up">ممتاز</span></td></tr>
-            <tr><td>الأربعاء</td><td class="amt-pos">₪2,600</td><td class="amt-pos">₪1,100</td><td><span class="kpi-badge badge-up">جيد</span></td></tr>
-            <tr><td>الخميس</td><td class="amt-pos">₪4,100</td><td class="amt-pos">₪2,050</td><td><span class="kpi-badge badge-up">ممتاز</span></td></tr>
-            <tr><td>الجمعة</td><td class="amt-pos">₪3,840</td><td class="amt-pos">₪1,914</td><td><span class="kpi-badge badge-up">جيد</span></td></tr>
-            <tr class="row-total"><td><strong>الإجمالي</strong></td><td class="amt-gold">₪22,190</td><td class="amt-gold">₪10,484</td><td>—</td></tr>
-          </tbody>
-        </table>
+<!-- BOOKING -->
+<section class="booking" id="booking">
+  <div class="booking-info">
+    <span class="section-tag">الحجز المسبق</span>
+    <h2 class="section-title">احجز<br><span>تجربتك</span></h2>
+    <div class="section-divider"></div>
+    <p style="font-size:0.95rem;color:rgba(42,33,24,0.65);line-height:1.8;margin-bottom:36px;">الجلسات محدودة كل خميس — نوصيك بالحجز مبكراً لضمان مكانك في التجربة المناسبة لك.</p>
+
+    <div class="booking-steps">
+      <div class="step">
+        <div class="step-num">١</div>
+        <div class="step-content">
+          <div class="step-title">اختر باقتك</div>
+          <div class="step-desc">فردية، عائلية أو VIP — كل باقة بمواصفاتها الخاصة</div>
+        </div>
       </div>
-      <div class="panel">
-        <div class="panel-title">توصيات الأسبوع القادم</div>
-        <div style="display:flex;flex-direction:column;gap:12px;font-size:13px;line-height:1.7">
-          <div class="alert-banner alert-warn" style="margin:0">⚠️ خفّض تكلفة الطعام من 34% إلى 30% بمراجعة الموردين أو تعديل الوصفات.</div>
-          <div class="alert-banner alert-ok" style="margin:0">✅ يوم الخميس الأقوى — ابدأ عروض خاصة الأحد والاثنين لرفع المبيعات.</div>
-          <div class="alert-banner alert-warn" style="margin:0">⚠️ الحلويات ربحيتها 22% فقط — ارفع السعر أو اختصر التشكيلة.</div>
-          <div class="alert-banner alert-ok" style="margin:0">✅ هامش الربح الأسبوعي 47.2% — هدف ممتاز الاستمرار فوق 45%.</div>
+      <div class="step">
+        <div class="step-num">٢</div>
+        <div class="step-content">
+          <div class="step-title">اختر طبقك</div>
+          <div class="step-desc">من قائمة أطباقنا التراثية المحددة مسبقاً</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">٣</div>
+        <div class="step-content">
+          <div class="step-title">أكّد الحجز</div>
+          <div class="step-desc">دفع مقدم بسيط لتأكيد مكانك — والباقي عند الحضور</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">٤</div>
+        <div class="step-content">
+          <div class="step-title">تعال واستمتع</div>
+          <div class="step-desc">كل شيء جاهز لك — المكونات، الشيف، والتراث</div>
         </div>
       </div>
     </div>
   </div>
 
-</div><!-- end wrapper -->
+  <div class="booking-form">
+    <div class="form-title">نموذج الحجز</div>
 
-<script>
-// Tab switching
-function switchTab(id) {
-  document.querySelectorAll('.tab').forEach((t,i) => {
-    const ids = ['daily','dishes','budget','weekly'];
-    t.classList.toggle('active', ids[i] === id);
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">الاسم الكامل</label>
+        <input type="text" class="form-control" placeholder="أدخل اسمك">
+      </div>
+      <div class="form-group">
+        <label class="form-label">رقم الهاتف</label>
+        <input type="tel" class="form-control" placeholder="05X-XXXXXXX">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">البريد الإلكتروني</label>
+      <input type="email" class="form-control" placeholder="example@email.com">
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">اختر الباقة</label>
+      <select class="form-control">
+        <option value="">-- اختر باقتك --</option>
+        <option>الباقة الأساسية — ₪85 للشخص</option>
+        <option>الباقة العائلية — ₪320 للمجموعة (4-6 أشخاص)</option>
+        <option>باقة VIP — ₪180 للشخص</option>
+      </select>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">تاريخ الجلسة (خميس)</label>
+        <input type="date" class="form-control">
+      </div>
+      <div class="form-group">
+        <label class="form-label">عدد الأشخاص</label>
+        <select class="form-control">
+          <option>1</option>
+          <option>2</option>
+          <option>3</option>
+          <option>4</option>
+          <option>5</option>
+          <option>6</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">اختر الطبق</label>
+      <select class="form-control">
+        <option value="">-- اختر طبقك التراثي --</option>
+        <option>المنسف الخليلي</option>
+        <option>المسخن الأصيل</option>
+        <option>المقلوبة الجليلية</option>
+        <option>الكنافة النابلسية</option>
+        <option>الفريكة المقدسية</option>
+        <option>الفول الغزي</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">ملاحظات إضافية</label>
+      <textarea class="form-control" rows="3" placeholder="حساسية طعام، مناسبة خاصة..."></textarea>
+    </div>
+
+    <button class="form-submit">تأكيد الحجز ✦</button>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="footer-logo">اطبخ طبقك الفلسطيني</div>
+      <p class="footer-tagline">نحافظ على تراث فلسطين بنكهاتها الأصيلة — من كل مدينة، لكل مائدة، لكل جيل.</p>
+    </div>
+    <div>
+      <div class="footer-col-title">روابط سريعة</div>
+      <ul class="footer-links">
+        <li><a href="#about">عن المطعم</a></li>
+        <li><a href="#experience">اطبخ طبقك</a></li>
+        <li><a href="#menu">قائمة الأطباق</a></li>
+        <li><a href="#vip">تجربة VIP</a></li>
+        <li><a href="#booking">احجز الآن</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">تواصل معنا</div>
+      <ul class="footer-links">
+        <li><a href="#">📞 059-XXXXXXX</a></li>
+        <li><a href="#">📧 <span class="__cf_email__" data-cfemail="6e070008012e030f1f0f03401e1d">[email&#160;protected]</span></a></li>
+        <li><a href="#">📍 نابلس، فلسطين</a></li>
+        <li><a href="#">كل خميس | 10ص — 10م</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2024 اطبخ طبقك الفلسطيني — جميع الحقوق محفوظة</span>
+    <span>صُنع بـ ♥ لفلسطين</span>
+  </div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  // City filter buttons
+  const cityBtns = document.querySelectorAll('.city-btn');
+  cityBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      cityBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    });
   });
-  document.querySelectorAll('.tab-content').forEach(c => {
-    c.classList.toggle('active', c.id === 'tab-' + id);
+
+  // Smooth scroll for nav
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
   });
-  if (id === 'weekly') buildWeekChart();
-}
 
-// Add expense
-const expenses = [];
-function addExpense() {
-  const name = document.getElementById('exp-name').value.trim();
-  const amt  = parseFloat(document.getElementById('exp-amount').value);
-  const cat  = document.getElementById('exp-cat').value.trim() || 'عام';
-  if (!name || isNaN(amt) || amt <= 0) { alert('يرجى إدخال البند والمبلغ بشكل صحيح'); return; }
-  expenses.push({name, amt, cat});
-  const log = document.getElementById('expense-log');
-  log.style.display = 'block';
-  log.innerHTML = `<div class="panel-title" style="font-size:13px;margin-bottom:10px">المصاريف المسجّلة</div>` +
-    expenses.map(e => `<div class="alert-banner alert-warn" style="margin-bottom:6px;padding:8px 14px">
-      <span class="alert-icon">💸</span>
-      <span><strong>${e.name}</strong> — ₪${e.amt.toLocaleString()} (${e.cat})</span>
-    </div>`).join('');
-  document.getElementById('exp-name').value = '';
-  document.getElementById('exp-amount').value = '';
-  document.getElementById('exp-cat').value = '';
-}
-
-// Calc dish
-function calcDish() {
-  const name  = document.getElementById('dish-name').value || 'الصنف';
-  const price = parseFloat(document.getElementById('dish-price').value);
-  const cost  = parseFloat(document.getElementById('dish-cost').value);
-  if (isNaN(price)||isNaN(cost)||price<=0||cost<0) { alert('أدخل سعر البيع وتكلفة المواد'); return; }
-  const profit = price - cost;
-  const margin = ((profit / price) * 100).toFixed(1);
-  const el = document.getElementById('dish-result');
-  el.style.display = 'flex';
-  const cls = margin > 55 ? 'alert-ok' : margin > 35 ? 'alert-warn' : 'alert-danger';
-  el.className = 'alert-banner ' + cls;
-  el.innerHTML = `<span class="alert-icon">${margin>55?'✅':margin>35?'⚠️':'🔴'}</span>
-    <span><strong>${name}</strong>: ربح ₪${profit} — هامش <strong>${margin}%</strong> 
-    ${margin>55?' — ممتاز! روّج لهذا الصنف':margin>35?' — مقبول، يمكن تحسينه':' — منخفض جداً، راجع التسعير أو التكلفة'}</span>`;
-}
-
-// Budget add
-function addBudget() {
-  const name  = document.getElementById('bud-name').value.trim();
-  const limit = parseFloat(document.getElementById('bud-limit').value);
-  const spent = parseFloat(document.getElementById('bud-spent').value);
-  if (!name||isNaN(limit)||isNaN(spent)) { alert('أكمل البيانات'); return; }
-  const pct = Math.min((spent/limit)*100, 100).toFixed(0);
-  const over = spent > limit;
-  const el = document.getElementById('bud-result');
-  el.style.display = 'flex';
-  el.className = 'alert-banner ' + (over ? 'alert-danger' : pct > 80 ? 'alert-warn' : 'alert-ok');
-  el.innerHTML = `<span>${over ? '🔴' : pct>80?'⚠️':'✅'}</span>
-    <span><strong>${name}</strong>: ₪${spent} من ₪${limit} (${pct}%) — ${over?'تجاوز الميزانية!':pct>80?'اقترب من السقف':'ضمن الميزانية'}</span>`;
-}
-
-// Print
-function printReport() { window.print(); }
-
-// Weekly chart
-const weekData = [
-  {day:'سبت', rev:3200, profit:1540},
-  {day:'أحد',  rev:2850, profit:1280},
-  {day:'اثنين',rev:2100, profit:900},
-  {day:'ثلاثاء',rev:3500,profit:1700},
-  {day:'أربعاء',rev:2600,profit:1100},
-  {day:'خميس',rev:4100, profit:2050},
-  {day:'جمعة',rev:3840, profit:1914},
-];
-function buildWeekChart() {
-  const wrap = document.getElementById('weekChart');
-  if (wrap.children.length > 0) return;
-  const maxRev = Math.max(...weekData.map(d=>d.rev));
-  weekData.forEach(d => {
-    const revH  = Math.round((d.rev/maxRev)*88);
-    const proH  = Math.round((d.profit/maxRev)*88);
-    const col = document.createElement('div');
-    col.className = 'week-bar-wrap';
-    col.innerHTML = `
-      <div style="display:flex;align-items:flex-end;gap:3px;height:88px">
-        <div class="week-bar revenue" style="width:14px;height:${revH}px" title="مبيعات ₪${d.rev}"></div>
-        <div class="week-bar profit"  style="width:14px;height:${proH}px" title="ربح ₪${d.profit}"></div>
-      </div>
-      <div class="week-day">${d.day}</div>`;
-    wrap.appendChild(col);
+  // Nav background on scroll
+  const nav = document.querySelector('nav');
+  window.addEventListener('scroll', () => {
+    nav.style.background = window.scrollY > 80
+      ? 'rgba(42, 33, 24, 0.98)'
+      : 'rgba(42, 33, 24, 0.92)';
   });
-}
-</script>
-</body>
-</html>
+
+  // Booking form submit
+  document.querySelector('.form-submit').addEventListener('click', () => {
+    const inputs = document.querySelectorAll('.form-control');
+    let valid = true;
+    inputs.forEach(i => { if (!i.value) valid = false; });
+    if (valid) {
+    alert('✅ تم استلام حجزك! سنتواصل معك قريباً لتأكيد التفاصيل.');
+  } else {
+    alert('يرجى ملء جميع الحقول المطلوبة.');
+  }
+});
