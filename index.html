@@ -3,22 +3,21 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>اطبخ طبقك الفلسطيني | مطعم التراث الفلسطيني</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+<title>اطبخ طبقك الفلسطيني</title>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
 <style>
   :root {
-    --clay: #C4714A;
-    --earth: #8B4F2E;
-    --cream: #F5EDD8;
-    --olive: #5C6B3A;
-    --olive-light: #8A9A5B;
-    --charcoal: #2A2118;
-    --gold: #C8952A;
-    --gold-light: #E8B84B;
-    --smoke: #F0E8D5;
-    --terracotta: #B85C38;
-    --parchment: #EDE0C4;
+    --olive: #4a5c2f;
+    --olive-light: #6b7f45;
+    --clay: #c8723a;
+    --clay-light: #e8956a;
+    --cream: #f5efe3;
+    --cream-dark: #e8dcc8;
+    --soil: #2c1f0e;
+    --soil-mid: #3d2c14;
+    --gold: #c9a227;
+    --gold-light: #f0c84a;
+    --white: #faf6ef;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -27,23 +26,23 @@
 
   body {
     font-family: 'Tajawal', sans-serif;
-    background: var(--cream);
-    color: var(--charcoal);
+    background: var(--soil);
+    color: var(--cream);
     overflow-x: hidden;
   }
 
-  /* ── GRAIN OVERLAY ── */
+  /* ──── TEXTURE OVERLAY ──── */
   body::before {
     content: '';
     position: fixed;
     inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
     pointer-events: none;
     z-index: 9999;
-    opacity: 0.5;
+    opacity: 0.6;
   }
 
-  /* ── NAV ── */
+  /* ──── NAV ──── */
   nav {
     position: fixed;
     top: 0; left: 0; right: 0;
@@ -51,1408 +50,1318 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 18px 60px;
-    background: rgba(42, 33, 24, 0.92);
+    padding: 1.2rem 3rem;
+    background: rgba(44, 31, 14, 0.92);
     backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(200, 149, 42, 0.3);
+    border-bottom: 1px solid rgba(201, 162, 39, 0.2);
   }
 
   .nav-logo {
     font-family: 'Amiri', serif;
-    font-size: 2rem;
-    color: var(--gold-light);
-    letter-spacing: 2px;
+    font-size: 1.4rem;
+    color: var(--gold);
+    letter-spacing: 0.05em;
   }
 
   .nav-links {
     display: flex;
-    gap: 36px;
+    gap: 2rem;
     list-style: none;
   }
 
   .nav-links a {
-    color: var(--cream);
+    color: var(--cream-dark);
     text-decoration: none;
     font-size: 0.95rem;
     font-weight: 500;
-    letter-spacing: 0.5px;
-    opacity: 0.85;
-    transition: opacity 0.2s, color 0.2s;
+    transition: color 0.3s;
+    letter-spacing: 0.03em;
   }
 
-  .nav-links a:hover { opacity: 1; color: var(--gold-light); }
+  .nav-links a:hover { color: var(--gold); }
 
-  .nav-cta {
-    background: var(--clay);
-    color: var(--cream) !important;
-    padding: 10px 24px;
-    border-radius: 2px;
-    opacity: 1 !important;
-    transition: background 0.2s !important;
-  }
-
-  .nav-cta:hover { background: var(--earth) !important; }
-
-  /* ── HERO ── */
+  /* ──── HERO ──── */
   .hero {
     min-height: 100vh;
     position: relative;
     display: flex;
+    flex-direction: column;
     align-items: center;
+    justify-content: center;
+    text-align: center;
     overflow: hidden;
-    background: var(--charcoal);
   }
 
   .hero-bg {
     position: absolute;
     inset: 0;
     background:
-      radial-gradient(ellipse 70% 60% at 80% 50%, rgba(196, 113, 74, 0.18) 0%, transparent 60%),
-      radial-gradient(ellipse 50% 80% at 20% 80%, rgba(92, 107, 58, 0.15) 0%, transparent 60%),
-      linear-gradient(135deg, #2A2118 0%, #3D2E1E 40%, #2A1F14 100%);
+      radial-gradient(ellipse 80% 60% at 50% 40%, rgba(74, 92, 47, 0.35) 0%, transparent 70%),
+      radial-gradient(ellipse 60% 40% at 20% 80%, rgba(200, 114, 58, 0.2) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 50% at 80% 20%, rgba(201, 162, 39, 0.15) 0%, transparent 60%),
+      var(--soil);
   }
 
+  /* Geometric keffiyeh pattern */
   .hero-pattern {
     position: absolute;
     inset: 0;
-    opacity: 0.06;
-    background-image: repeating-linear-gradient(
-      45deg,
-      var(--gold) 0px, var(--gold) 1px,
-      transparent 1px, transparent 28px
-    ),
-    repeating-linear-gradient(
-      -45deg,
-      var(--gold) 0px, var(--gold) 1px,
-      transparent 1px, transparent 28px
-    );
+    background-image:
+      repeating-linear-gradient(45deg, rgba(201,162,39,0.04) 0, rgba(201,162,39,0.04) 1px, transparent 1px, transparent 20px),
+      repeating-linear-gradient(-45deg, rgba(201,162,39,0.04) 0, rgba(201,162,39,0.04) 1px, transparent 1px, transparent 20px);
   }
 
   .hero-content {
     position: relative;
     z-index: 2;
-    padding: 0 60px;
-    max-width: 780px;
-    animation: fadeUp 1.2s ease forwards;
+    max-width: 800px;
+    padding: 2rem;
   }
 
-  .hero-tag {
+  .hero-badge {
     display: inline-block;
-    font-size: 0.78rem;
-    letter-spacing: 4px;
-    color: var(--gold-light);
-    text-transform: uppercase;
-    margin-bottom: 24px;
-    border-right: 2px solid var(--clay);
-    padding-right: 14px;
+    border: 1px solid rgba(201,162,39,0.5);
+    color: var(--gold);
+    font-size: 0.8rem;
+    letter-spacing: 0.15em;
+    padding: 0.4rem 1.2rem;
+    border-radius: 2px;
+    margin-bottom: 2rem;
+    animation: fadeUp 0.8s ease both;
   }
 
   .hero h1 {
     font-family: 'Amiri', serif;
-    font-size: clamp(3.5rem, 7vw, 6rem);
-    color: var(--cream);
-    line-height: 1.1;
-    margin-bottom: 20px;
+    font-size: clamp(3rem, 8vw, 6rem);
+    line-height: 1.15;
+    color: var(--white);
+    margin-bottom: 1rem;
+    animation: fadeUp 0.8s 0.15s ease both;
   }
 
-  .hero h1 span { color: var(--gold-light); }
+  .hero h1 span { color: var(--gold); }
 
   .hero-sub {
     font-size: 1.15rem;
-    color: rgba(245, 237, 216, 0.72);
+    color: var(--cream-dark);
+    max-width: 560px;
+    margin: 0 auto 2.5rem;
     line-height: 1.8;
-    max-width: 520px;
-    margin-bottom: 44px;
     font-weight: 300;
+    animation: fadeUp 0.8s 0.3s ease both;
   }
 
-  .hero-btns { display: flex; gap: 16px; flex-wrap: wrap; }
+  .hero-cta {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    animation: fadeUp 0.8s 0.45s ease both;
+  }
 
   .btn-primary {
     background: var(--clay);
-    color: var(--cream);
-    padding: 16px 36px;
+    color: var(--white);
+    padding: 0.85rem 2.2rem;
+    border: none;
     font-family: 'Tajawal', sans-serif;
     font-size: 1rem;
-    font-weight: 600;
-    border: none;
+    font-weight: 700;
     cursor: pointer;
-    border-radius: 2px;
-    transition: background 0.25s, transform 0.2s;
     text-decoration: none;
-    display: inline-block;
+    transition: all 0.3s;
+    clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
   }
 
-  .btn-primary:hover { background: var(--earth); transform: translateY(-2px); }
+  .btn-primary:hover {
+    background: var(--clay-light);
+    transform: translateY(-2px);
+  }
 
   .btn-outline {
     background: transparent;
-    color: var(--cream);
-    padding: 16px 36px;
+    color: var(--gold);
+    padding: 0.85rem 2.2rem;
+    border: 1.5px solid var(--gold);
     font-family: 'Tajawal', sans-serif;
     font-size: 1rem;
-    font-weight: 500;
-    border: 1px solid rgba(245, 237, 216, 0.4);
+    font-weight: 700;
     cursor: pointer;
-    border-radius: 2px;
-    transition: border-color 0.25s, color 0.25s;
     text-decoration: none;
-    display: inline-block;
+    transition: all 0.3s;
+    clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
   }
 
-  .btn-outline:hover { border-color: var(--gold-light); color: var(--gold-light); }
+  .btn-outline:hover {
+    background: rgba(201,162,39,0.1);
+    transform: translateY(-2px);
+  }
 
-  .hero-scroll {
+  /* Scroll indicator */
+  .scroll-hint {
     position: absolute;
-    bottom: 40px;
+    bottom: 2.5rem;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 8px;
-    color: rgba(245, 237, 216, 0.5);
+    gap: 0.5rem;
+    color: rgba(245, 239, 227, 0.4);
     font-size: 0.75rem;
-    letter-spacing: 2px;
     animation: bounce 2s infinite;
   }
 
-  .hero-scroll-line {
+  .scroll-hint::after {
+    content: '';
+    display: block;
     width: 1px;
-    height: 48px;
-    background: linear-gradient(to bottom, rgba(200, 149, 42, 0.7), transparent);
+    height: 40px;
+    background: linear-gradient(to bottom, rgba(201,162,39,0.4), transparent);
+    margin-top: 0.3rem;
   }
 
-  /* ── SECTION BASE ── */
-  section { padding: 100px 60px; }
+  /* ──── SECTION WRAPPER ──── */
+  section {
+    padding: 6rem 2rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
 
-  .section-tag {
-    font-size: 0.72rem;
-    letter-spacing: 5px;
+  .section-full {
+    max-width: 100%;
+    padding: 6rem 0;
+    background: var(--soil-mid);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .section-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  .section-label {
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    color: var(--gold);
     text-transform: uppercase;
-    color: var(--clay);
-    margin-bottom: 14px;
-    display: block;
+    margin-bottom: 0.8rem;
+    font-weight: 500;
   }
 
   .section-title {
     font-family: 'Amiri', serif;
-    font-size: clamp(2rem, 4vw, 3.2rem);
-    color: var(--charcoal);
-    margin-bottom: 18px;
-    line-height: 1.2;
+    font-size: clamp(2rem, 4vw, 3rem);
+    color: var(--white);
+    margin-bottom: 1rem;
+    line-height: 1.3;
   }
 
-  .section-title span { color: var(--clay); }
-
-  .section-divider {
-    width: 60px;
-    height: 3px;
-    background: linear-gradient(to left, var(--clay), var(--gold));
-    margin-bottom: 40px;
-    border-radius: 2px;
+  .section-desc {
+    color: var(--cream-dark);
+    font-size: 1.05rem;
+    max-width: 580px;
+    line-height: 1.85;
+    font-weight: 300;
   }
 
-  /* ── ABOUT ── */
-  .about {
-    background: var(--charcoal);
-    color: var(--cream);
+  /* ──── ABOUT STRIP ──── */
+  .about-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 80px;
+    gap: 5rem;
     align-items: center;
-  }
-
-  .about .section-title { color: var(--cream); }
-  .about .section-divider { background: linear-gradient(to left, var(--clay), var(--gold-light)); }
-
-  .about-text {
-    font-size: 1.05rem;
-    line-height: 2;
-    color: rgba(245, 237, 216, 0.8);
-    font-weight: 300;
-    margin-bottom: 24px;
   }
 
   .about-visual {
     position: relative;
   }
 
-  .about-frame {
-    width: 100%;
-    aspect-ratio: 4/5;
-    background: linear-gradient(135deg, var(--earth), var(--clay) 50%, var(--terracotta));
-    border-radius: 4px;
+  .olive-branch-ring {
+    width: 320px;
+    height: 320px;
+    border-radius: 50%;
+    border: 2px solid rgba(201,162,39,0.25);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-family: 'Amiri', serif;
-    font-size: 7rem;
     position: relative;
-    overflow: hidden;
   }
 
-  .about-frame::before {
+  .olive-branch-ring::before {
     content: '';
     position: absolute;
-    inset: 0;
-    background: repeating-linear-gradient(
-      0deg, transparent, transparent 30px,
-      rgba(0,0,0,0.08) 30px, rgba(0,0,0,0.08) 31px
-    );
+    inset: 12px;
+    border-radius: 50%;
+    border: 1px solid rgba(74,92,47,0.4);
   }
 
-  .about-badge {
-    position: absolute;
-    bottom: -20px;
-    right: -20px;
-    width: 120px;
-    height: 120px;
-    background: var(--gold);
-    border-radius: 50%;
+  .center-icon {
+    font-size: 5rem;
+    filter: drop-shadow(0 0 30px rgba(201,162,39,0.3));
+  }
+
+  .stat-chips {
     display: flex;
     flex-direction: column;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  .chip {
+    display: flex;
     align-items: center;
-    justify-content: center;
+    gap: 1rem;
+    padding: 1rem 1.5rem;
+    border: 1px solid rgba(201,162,39,0.2);
+    background: rgba(201,162,39,0.05);
+  }
+
+  .chip-num {
     font-family: 'Amiri', serif;
-    color: var(--charcoal);
-    font-size: 0.75rem;
+    font-size: 2rem;
+    color: var(--gold);
     font-weight: 700;
-    text-align: center;
-    line-height: 1.4;
-    box-shadow: 0 8px 32px rgba(200, 149, 42, 0.4);
-  }
-
-  .about-badge .num { font-size: 2rem; display: block; }
-
-  /* ── EXPERIENCE "اطبخ طبقك" ── */
-  .experience {
-    background: var(--smoke);
-    position: relative;
-    overflow: hidden;
-  }
-
-  .experience::before {
-    content: 'اطبخ';
-    position: absolute;
-    top: -30px;
-    left: -20px;
-    font-family: 'Amiri', serif;
-    font-size: 18rem;
-    color: rgba(196, 113, 74, 0.06);
-    pointer-events: none;
     line-height: 1;
   }
 
-  .experience-header { max-width: 600px; margin-bottom: 60px; }
+  .chip-text {
+    font-size: 0.9rem;
+    color: var(--cream-dark);
+    line-height: 1.4;
+  }
 
-  .packages {
+  /* ──── PACKAGES ──── */
+  .packages-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 28px;
+    gap: 1.5rem;
+    margin-top: 3rem;
   }
 
-  .package-card {
-    background: white;
-    border-radius: 4px;
-    overflow: hidden;
-    box-shadow: 0 4px 24px rgba(42, 33, 24, 0.08);
-    transition: transform 0.3s, box-shadow 0.3s;
+  .pkg-card {
+    border: 1px solid rgba(201,162,39,0.2);
+    padding: 2.5rem 2rem;
     position: relative;
+    transition: all 0.4s;
+    background: rgba(255,255,255,0.02);
+    cursor: pointer;
   }
 
-  .package-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 16px 48px rgba(42, 33, 24, 0.16);
+  .pkg-card:hover {
+    border-color: var(--gold);
+    background: rgba(201,162,39,0.06);
+    transform: translateY(-6px);
   }
 
-  .package-card.featured {
-    border: 2px solid var(--gold);
+  .pkg-card.featured {
+    border-color: var(--clay);
+    background: rgba(200,114,58,0.08);
   }
 
-  .package-badge-top {
+  .pkg-card.featured::before {
+    content: 'الأكثر شعبية';
     position: absolute;
-    top: 16px;
-    left: 16px;
-    background: var(--gold);
-    color: var(--charcoal);
-    font-size: 0.68rem;
-    font-weight: 700;
-    letter-spacing: 2px;
-    padding: 4px 10px;
-    border-radius: 2px;
-    text-transform: uppercase;
-  }
-
-  .package-header {
-    padding: 36px 32px 24px;
-    border-bottom: 1px solid var(--parchment);
-  }
-
-  .package-icon {
-    font-size: 2.4rem;
-    margin-bottom: 14px;
-    display: block;
-  }
-
-  .package-name {
-    font-family: 'Amiri', serif;
-    font-size: 1.6rem;
-    color: var(--charcoal);
-    margin-bottom: 6px;
-  }
-
-  .package-sub {
-    font-size: 0.85rem;
-    color: var(--clay);
-    font-weight: 500;
-  }
-
-  .package-price {
-    padding: 20px 32px;
-    background: var(--parchment);
-  }
-
-  .price-amount {
-    font-family: 'Amiri', serif;
-    font-size: 2.2rem;
-    color: var(--charcoal);
-  }
-
-  .price-currency {
-    font-size: 0.85rem;
-    color: rgba(42, 33, 24, 0.6);
-    margin-right: 6px;
-  }
-
-  .price-per {
-    font-size: 0.78rem;
-    color: rgba(42, 33, 24, 0.55);
-    display: block;
-    margin-top: 2px;
-  }
-
-  .package-body { padding: 28px 32px; }
-
-  .package-features {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    margin-bottom: 28px;
-  }
-
-  .package-features li {
-    font-size: 0.9rem;
-    color: rgba(42, 33, 24, 0.8);
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-    line-height: 1.5;
-  }
-
-  .package-features li::before {
-    content: '✦';
-    color: var(--clay);
-    font-size: 0.65rem;
-    margin-top: 4px;
-    flex-shrink: 0;
-  }
-
-  .package-duration {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 0.82rem;
-    color: var(--olive);
-    font-weight: 600;
-    background: rgba(92, 107, 58, 0.1);
-    padding: 8px 14px;
-    border-radius: 2px;
-    margin-bottom: 20px;
-  }
-
-  .btn-book {
-    width: 100%;
-    background: var(--charcoal);
-    color: var(--cream);
-    padding: 14px;
-    border: none;
-    border-radius: 2px;
-    font-family: 'Tajawal', sans-serif;
-    font-size: 0.95rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background 0.25s;
-    letter-spacing: 0.5px;
-  }
-
-  .btn-book:hover { background: var(--clay); }
-
-  .featured .btn-book { background: var(--clay); }
-  .featured .btn-book:hover { background: var(--earth); }
-
-  /* ── DISHES MENU ── */
-  .menu {
-    background: var(--charcoal);
-    color: var(--cream);
-  }
-
-  .menu .section-title { color: var(--cream); }
-
-  .cities-nav {
-    display: flex;
-    gap: 12px;
-    flex-wrap: wrap;
-    margin-bottom: 48px;
-  }
-
-  .city-btn {
-    padding: 9px 22px;
-    background: transparent;
-    border: 1px solid rgba(245, 237, 216, 0.25);
-    color: rgba(245, 237, 216, 0.7);
-    border-radius: 2px;
-    font-family: 'Tajawal', sans-serif;
-    font-size: 0.88rem;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-
-  .city-btn.active,
-  .city-btn:hover {
+    top: -1px; right: 1.5rem;
     background: var(--clay);
-    border-color: var(--clay);
-    color: var(--cream);
-  }
-
-  .dishes-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    gap: 24px;
-  }
-
-  .dish-card {
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(245, 237, 216, 0.1);
-    border-radius: 4px;
-    overflow: hidden;
-    transition: border-color 0.3s, background 0.3s;
-    cursor: pointer;
-  }
-
-  .dish-card:hover {
-    border-color: var(--clay);
-    background: rgba(196, 113, 74, 0.08);
-  }
-
-  .dish-img {
-    width: 100%;
-    aspect-ratio: 4/3;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 4rem;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .dish-city-tag {
-    position: absolute;
-    bottom: 10px;
-    right: 10px;
-    background: var(--gold);
-    color: var(--charcoal);
-    font-size: 0.68rem;
+    color: white;
+    font-size: 0.75rem;
     font-weight: 700;
-    padding: 3px 9px;
-    border-radius: 2px;
-    letter-spacing: 1px;
+    padding: 0.3rem 0.8rem;
+    letter-spacing: 0.05em;
   }
 
-  .dish-info { padding: 20px; }
+  .pkg-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1.2rem;
+  }
 
-  .dish-name {
+  .pkg-name {
     font-family: 'Amiri', serif;
-    font-size: 1.25rem;
-    color: var(--cream);
-    margin-bottom: 6px;
+    font-size: 1.5rem;
+    color: var(--white);
+    margin-bottom: 0.5rem;
   }
 
-  .dish-desc {
-    font-size: 0.82rem;
-    color: rgba(245, 237, 216, 0.55);
-    line-height: 1.6;
+  .pkg-price {
+    font-size: 0.95rem;
+    color: var(--gold);
+    font-weight: 700;
+    margin-bottom: 1rem;
+    direction: rtl;
   }
 
-  /* ── VIP EXPERIENCE ── */
-  .vip {
-    background: linear-gradient(135deg, var(--charcoal) 0%, #3D2A18 50%, var(--charcoal) 100%);
-    position: relative;
-    overflow: hidden;
-    padding: 120px 60px;
-  }
-
-  .vip-pattern {
-    position: absolute;
-    inset: 0;
-    opacity: 0.04;
-    background-image:
-      repeating-conic-gradient(var(--gold) 0% 25%, transparent 0% 50%);
-    background-size: 40px 40px;
-  }
-
-  .vip-inner {
-    position: relative;
-    z-index: 2;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 80px;
-    align-items: center;
-  }
-
-  .vip-content .section-title { color: var(--cream); }
-  .vip-content .section-title span { color: var(--gold-light); }
-
-  .vip-text {
-    font-size: 1.05rem;
-    line-height: 1.9;
-    color: rgba(245, 237, 216, 0.75);
-    margin-bottom: 32px;
+  .pkg-desc {
+    font-size: 0.9rem;
+    color: var(--cream-dark);
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
     font-weight: 300;
   }
 
-  .vip-features {
+  .pkg-features {
+    list-style: none;
     display: flex;
     flex-direction: column;
-    gap: 20px;
-    margin-bottom: 40px;
+    gap: 0.5rem;
   }
 
-  .vip-feature {
+  .pkg-features li {
+    font-size: 0.85rem;
+    color: var(--cream-dark);
     display: flex;
     align-items: flex-start;
-    gap: 18px;
+    gap: 0.5rem;
   }
 
-  .vip-feature-icon {
-    width: 48px;
-    height: 48px;
-    background: rgba(200, 149, 42, 0.15);
-    border: 1px solid rgba(200, 149, 42, 0.3);
-    border-radius: 3px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.4rem;
+  .pkg-features li::before {
+    content: '✦';
+    color: var(--gold);
+    font-size: 0.65rem;
+    margin-top: 0.25rem;
     flex-shrink: 0;
   }
 
-  .vip-feature-text { flex: 1; }
-
-  .vip-feature-title {
-    font-weight: 700;
-    color: var(--gold-light);
-    margin-bottom: 4px;
-    font-size: 0.95rem;
-  }
-
-  .vip-feature-desc {
-    font-size: 0.85rem;
-    color: rgba(245, 237, 216, 0.6);
-    line-height: 1.6;
-  }
-
-  .vip-visual {
-    position: relative;
+  /* ──── MENU ──── */
+  .menu-tabs {
     display: flex;
-    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-bottom: 3rem;
   }
 
-  .vip-emblem {
-    width: 340px;
-    height: 340px;
-    border: 1px solid rgba(200, 149, 42, 0.3);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-  }
-
-  .vip-emblem::before {
-    content: '';
-    position: absolute;
-    inset: 16px;
-    border: 1px solid rgba(200, 149, 42, 0.15);
-    border-radius: 50%;
-  }
-
-  .vip-emblem::after {
-    content: '';
-    position: absolute;
-    inset: 32px;
-    border: 1px solid rgba(200, 149, 42, 0.08);
-    border-radius: 50%;
-  }
-
-  .vip-emblem-inner {
-    width: 200px;
-    height: 200px;
-    background: radial-gradient(circle, rgba(200, 149, 42, 0.2), rgba(196, 113, 74, 0.1));
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: 'Amiri', serif;
-    font-size: 1.2rem;
-    color: var(--gold-light);
-    text-align: center;
-    line-height: 1.6;
-    padding: 20px;
-  }
-
-  /* ── SAFETY ── */
-  .safety {
-    background: var(--olive);
-    color: var(--cream);
-    text-align: center;
-    padding: 80px 60px;
-  }
-
-  .safety .section-title { color: var(--cream); }
-  .safety .section-divider { margin: 0 auto 40px; }
-
-  .safety-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 32px;
-    margin-top: 56px;
-  }
-
-  .safety-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 14px;
-  }
-
-  .safety-icon {
-    width: 72px;
-    height: 72px;
-    background: rgba(255,255,255,0.12);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 2rem;
-  }
-
-  .safety-label {
+  .tab-btn {
+    background: transparent;
+    border: 1px solid rgba(201,162,39,0.25);
+    color: var(--cream-dark);
+    padding: 0.5rem 1.2rem;
+    font-family: 'Tajawal', sans-serif;
     font-size: 0.9rem;
-    line-height: 1.6;
-    color: rgba(245, 237, 216, 0.85);
-    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-weight: 500;
   }
 
-  /* ── BOOKING ── */
-  .booking {
-    background: var(--cream);
+  .tab-btn.active, .tab-btn:hover {
+    background: var(--olive);
+    border-color: var(--olive);
+    color: var(--white);
+  }
+
+  .menu-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 80px;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.2rem;
+  }
+
+  .dish-card {
+    border: 1px solid rgba(255,255,255,0.07);
+    padding: 1.5rem;
+    background: rgba(255,255,255,0.03);
+    transition: all 0.35s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .dish-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(to right, var(--olive), var(--clay));
+    transform: scaleX(0);
+    transition: transform 0.35s;
+    transform-origin: right;
+  }
+
+  .dish-card:hover::after { transform: scaleX(1); transform-origin: left; }
+
+  .dish-card:hover {
+    background: rgba(255,255,255,0.06);
+    border-color: rgba(201,162,39,0.3);
+  }
+
+  .dish-city {
+    font-size: 0.72rem;
+    color: var(--clay-light);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 0.4rem;
+    font-weight: 700;
+  }
+
+  .dish-name-ar {
+    font-family: 'Amiri', serif;
+    font-size: 1.25rem;
+    color: var(--white);
+    margin-bottom: 0.2rem;
+  }
+
+  .dish-name-en {
+    font-size: 0.8rem;
+    color: rgba(245,239,227,0.4);
+    margin-bottom: 0.8rem;
+  }
+
+  .dish-desc {
+    font-size: 0.85rem;
+    color: var(--cream-dark);
+    line-height: 1.6;
+    font-weight: 300;
+  }
+
+  .dish-hidden { display: none; }
+
+  /* ──── EXPERIENCE TIMELINE ──── */
+  .timeline {
+    position: relative;
+    margin-top: 3rem;
+    padding-right: 2rem;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    right: 0; top: 0; bottom: 0;
+    width: 1px;
+    background: linear-gradient(to bottom, transparent, var(--gold), transparent);
+  }
+
+  .tl-item {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 2rem;
+    margin-bottom: 3rem;
     align-items: start;
   }
 
-  .booking-info { padding-top: 10px; }
+  .tl-content {}
 
-  .booking-steps {
+  .tl-time {
+    font-size: 0.8rem;
+    color: var(--gold);
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    white-space: nowrap;
+    padding-top: 0.3rem;
+    position: relative;
+  }
+
+  .tl-time::before {
+    content: '';
+    position: absolute;
+    right: -2rem;
+    top: 0.5rem;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    border: 2px solid var(--gold);
+    background: var(--soil);
+    transform: translateX(50%);
+  }
+
+  .tl-title {
+    font-family: 'Amiri', serif;
+    font-size: 1.3rem;
+    color: var(--white);
+    margin-bottom: 0.4rem;
+  }
+
+  .tl-desc {
+    font-size: 0.9rem;
+    color: var(--cream-dark);
+    line-height: 1.7;
+    font-weight: 300;
+  }
+
+  /* ──── BOOKING ──── */
+  .booking-wrap {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  .booking-info h3 {
+    font-family: 'Amiri', serif;
+    font-size: 1.6rem;
+    color: var(--white);
+    margin-bottom: 1rem;
+  }
+
+  .booking-info p {
+    color: var(--cream-dark);
+    line-height: 1.8;
+    font-size: 0.95rem;
+    font-weight: 300;
+    margin-bottom: 1.5rem;
+  }
+
+  .contact-list {
+    list-style: none;
     display: flex;
     flex-direction: column;
-    gap: 28px;
-    margin-top: 36px;
+    gap: 0.7rem;
   }
 
-  .step {
-    display: flex;
-    gap: 20px;
-    align-items: flex-start;
-  }
-
-  .step-num {
-    width: 40px;
-    height: 40px;
-    background: var(--clay);
-    color: white;
-    border-radius: 50%;
+  .contact-list li {
     display: flex;
     align-items: center;
-    justify-content: center;
-    font-family: 'Amiri', serif;
-    font-size: 1.1rem;
-    flex-shrink: 0;
+    gap: 0.8rem;
+    font-size: 0.9rem;
+    color: var(--cream-dark);
   }
 
-  .step-content { flex: 1; }
-
-  .step-title {
-    font-weight: 700;
-    color: var(--charcoal);
-    margin-bottom: 4px;
-    font-size: 0.95rem;
+  .contact-list span.icon {
+    color: var(--gold);
+    font-size: 1rem;
+    width: 1.5rem;
+    text-align: center;
   }
 
-  .step-desc {
-    font-size: 0.85rem;
-    color: rgba(42, 33, 24, 0.6);
-    line-height: 1.6;
+  .form-box {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(201,162,39,0.2);
+    padding: 2.5rem;
   }
-
-  .booking-form {
-    background: white;
-    border-radius: 4px;
-    padding: 44px;
-    box-shadow: 0 8px 48px rgba(42, 33, 24, 0.1);
-  }
-
-  .form-title {
-    font-family: 'Amiri', serif;
-    font-size: 1.8rem;
-    color: var(--charcoal);
-    margin-bottom: 32px;
-    padding-bottom: 20px;
-    border-bottom: 1px solid var(--parchment);
-  }
-
-  .form-group {
-    margin-bottom: 22px;
-  }
-
-  .form-label {
-    display: block;
-    font-size: 0.82rem;
-    font-weight: 600;
-    color: var(--charcoal);
-    margin-bottom: 8px;
-    letter-spacing: 0.5px;
-  }
-
-  .form-control {
-    width: 100%;
-    padding: 13px 16px;
-    border: 1px solid var(--parchment);
-    border-radius: 2px;
-    font-family: 'Tajawal', sans-serif;
-    font-size: 0.92rem;
-    color: var(--charcoal);
-    background: var(--smoke);
-    transition: border-color 0.2s;
-    outline: none;
-    appearance: none;
-  }
-
-  .form-control:focus { border-color: var(--clay); }
-
-  select.form-control { cursor: pointer; }
 
   .form-row {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 16px;
+    gap: 1rem;
   }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .form-group label {
+    font-size: 0.82rem;
+    color: var(--gold);
+    font-weight: 700;
+    letter-spacing: 0.05em;
+  }
+
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: var(--white);
+    font-family: 'Tajawal', sans-serif;
+    font-size: 0.95rem;
+    padding: 0.75rem 1rem;
+    outline: none;
+    transition: border-color 0.3s;
+    direction: rtl;
+    width: 100%;
+  }
+
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    border-color: var(--gold);
+  }
+
+  .form-group select option {
+    background: var(--soil);
+    color: var(--cream);
+  }
+
+  .form-group textarea { resize: vertical; min-height: 90px; }
 
   .form-submit {
     width: 100%;
-    padding: 16px;
-    background: var(--clay);
-    color: var(--cream);
-    border: none;
-    border-radius: 2px;
+    padding: 1rem;
+    background: var(--olive);
+    color: white;
     font-family: 'Tajawal', sans-serif;
-    font-size: 1rem;
+    font-size: 1.05rem;
     font-weight: 700;
+    border: none;
     cursor: pointer;
-    transition: background 0.25s;
-    margin-top: 8px;
-    letter-spacing: 0.5px;
+    transition: all 0.3s;
+    letter-spacing: 0.05em;
   }
 
-  .form-submit:hover { background: var(--earth); }
+  .form-submit:hover { background: var(--olive-light); transform: translateY(-2px); }
 
-  /* ── FOOTER ── */
-  footer {
-    background: #1A1410;
-    color: var(--cream);
-    padding: 60px 60px 32px;
-  }
-
-  .footer-top {
-    display: grid;
-    grid-template-columns: 2fr 1fr 1fr;
-    gap: 60px;
-    padding-bottom: 40px;
-    border-bottom: 1px solid rgba(245, 237, 216, 0.1);
-    margin-bottom: 32px;
-  }
-
-  .footer-logo {
+  .success-msg {
+    display: none;
+    text-align: center;
+    padding: 2rem;
+    color: var(--gold);
     font-family: 'Amiri', serif;
-    font-size: 2.8rem;
-    color: var(--gold-light);
-    margin-bottom: 14px;
+    font-size: 1.3rem;
   }
 
-  .footer-tagline {
-    font-size: 0.88rem;
-    color: rgba(245, 237, 216, 0.5);
-    line-height: 1.7;
-    max-width: 280px;
+  /* ──── SAFETY ──── */
+  .safety-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    margin-top: 3rem;
   }
 
-  .footer-col-title {
-    font-weight: 700;
+  .safety-card {
+    text-align: center;
+    padding: 2rem 1.5rem;
+    border: 1px solid rgba(201,162,39,0.15);
+    background: rgba(255,255,255,0.02);
+    transition: border-color 0.3s;
+  }
+
+  .safety-card:hover { border-color: rgba(201,162,39,0.4); }
+
+  .safety-icon { font-size: 2.2rem; margin-bottom: 1rem; }
+
+  .safety-title {
+    font-family: 'Amiri', serif;
+    font-size: 1.1rem;
+    color: var(--white);
+    margin-bottom: 0.5rem;
+  }
+
+  .safety-text {
     font-size: 0.82rem;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--clay);
-    margin-bottom: 20px;
+    color: var(--cream-dark);
+    line-height: 1.6;
+    font-weight: 300;
   }
 
-  .footer-links {
-    list-style: none;
+  /* ──── FOOTER ──── */
+  footer {
+    background: #1a1008;
+    text-align: center;
+    padding: 3rem 2rem;
+    border-top: 1px solid rgba(201,162,39,0.15);
+  }
+
+  footer .logo {
+    font-family: 'Amiri', serif;
+    font-size: 1.8rem;
+    color: var(--gold);
+    margin-bottom: 1rem;
+  }
+
+  footer p {
+    color: rgba(245,239,227,0.35);
+    font-size: 0.85rem;
+    margin-top: 0.5rem;
+  }
+
+  /* ──── DIVIDER ──── */
+  .divider {
     display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
-
-  .footer-links a {
-    color: rgba(245, 237, 216, 0.6);
-    text-decoration: none;
-    font-size: 0.9rem;
-    transition: color 0.2s;
-  }
-
-  .footer-links a:hover { color: var(--cream); }
-
-  .footer-bottom {
-    display: flex;
-    justify-content: space-between;
     align-items: center;
-    font-size: 0.8rem;
-    color: rgba(245, 237, 216, 0.35);
+    gap: 1rem;
+    margin: 2rem 0;
+    opacity: 0.3;
   }
 
-  /* ── ANIMATIONS ── */
+  .divider::before, .divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--gold);
+  }
+
+  .divider span { color: var(--gold); font-size: 1rem; }
+
+  /* ──── ANIMATIONS ──── */
   @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(30px); }
-    to { opacity: 1; transform: translateY(0); }
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
   }
 
   @keyframes bounce {
     0%, 100% { transform: translateX(-50%) translateY(0); }
-    50% { transform: translateX(-50%) translateY(8px); }
+    50%       { transform: translateX(-50%) translateY(8px); }
   }
 
-  /* ── DISH COLOR BACKGROUNDS ── */
-  .bg-mansaf { background: linear-gradient(135deg, #8B4F2E, #C4714A); }
-  .bg-musakhan { background: linear-gradient(135deg, #5C6B3A, #8A9A5B); }
-  .bg-maqlouba { background: linear-gradient(135deg, #C8952A, #E8B84B); }
-  .bg-knafeh { background: linear-gradient(135deg, #B85C38, #D4784A); }
-  .bg-freekeh { background: linear-gradient(135deg, #4A6741, #6B9163); }
-  .bg-mujaddara { background: linear-gradient(135deg, #6B4226, #8B5A34); }
-
-  /* ── RESPONSIVE ── */
-  @media (max-width: 900px) {
-    nav { padding: 16px 24px; }
+  /* ──── RESPONSIVE ──── */
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
     .nav-links { display: none; }
-    section { padding: 70px 24px; }
-    .hero-content { padding: 0 24px; }
-    .hero h1 { font-size: 3rem; }
-    .about, .vip-inner, .booking { grid-template-columns: 1fr; }
-    .packages { grid-template-columns: 1fr; }
-    .safety-grid { grid-template-columns: repeat(2, 1fr); }
-    .footer-top { grid-template-columns: 1fr; gap: 30px; }
-    .footer { padding: 40px 24px 24px; }
-    .vip { padding: 70px 24px; }
-    .vip-emblem { width: 240px; height: 240px; }
+    .about-grid { grid-template-columns: 1fr; }
+    .packages-grid { grid-template-columns: 1fr; }
+    .booking-wrap { grid-template-columns: 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+    .safety-grid { grid-template-columns: 1fr 1fr; }
+    .olive-branch-ring { width: 220px; height: 220px; }
   }
 </style>
 </head>
 <body>
 
-<!-- NAV -->
+<!-- ──── NAV ──── -->
 <nav>
-  <div class="nav-logo">اطبخ طبقك الفلسطيني</div>
+  <div class="nav-logo">🫒 اطبخ طبقك الفلسطيني</div>
   <ul class="nav-links">
-    <li><a href="#about">عن المطعم</a></li>
-    <li><a href="#experience">اطبخ طبقك</a></li>
-    <li><a href="#menu">قائمة الأطباق</a></li>
-    <li><a href="#vip">VIP</a></li>
-    <li><a href="#booking" class="nav-cta">احجز الآن</a></li>
+    <li><a href="#about">عن التجربة</a></li>
+    <li><a href="#packages">الباقات</a></li>
+    <li><a href="#menu">القائمة</a></li>
+    <li><a href="#experience">جدول اليوم</a></li>
+    <li><a href="#booking">احجز الآن</a></li>
   </ul>
 </nav>
 
-<!-- HERO -->
-<section class="hero">
+<!-- ──── HERO ──── -->
+<div class="hero">
   <div class="hero-bg"></div>
   <div class="hero-pattern"></div>
   <div class="hero-content">
-    <span class="hero-tag">تراث أصيل · طعم حقيقي</span>
-    <h1>حيث تعيش<br><span>روح فلسطين</span><br>على المائدة</h1>
-    <p class="hero-sub">مطعم مقام يحتضن تراث كل مدينة فلسطينية بنكهاتها الأصيلة، ويدعوك لتكون جزءاً من القصة — في تجربة طبخ لا تُنسى.</p>
-    <div class="hero-btns">
-      <a href="#booking" class="btn-primary">احجز تجربتك</a>
-      <a href="#experience" class="btn-outline">اكتشف الباقات</a>
-    </div>
-  </div>
-  <div class="hero-scroll">
-    <div class="hero-scroll-line"></div>
-    <span>تمرير</span>
-  </div>
-</section>
-
-<!-- ABOUT -->
-<section class="about" id="about">
-  <div class="about-content">
-    <span class="section-tag">من نحن</span>
-    <h2 class="section-title">مطعم <span>اطبخ طبقك الفلسطيني</span></h2>
-    <div class="section-divider"></div>
-    <p class="about-text">
-      اطبخ طبقك الفلسطيني ليس مجرد مطعم — بل هو رحلة عبر الزمن والجغرافيا الفلسطينية. نقدّم أطباقاً تراثية أصيلة من حيفا ونابلس والقدس والخليل وغزة وغيرها، محافظين على كل نكهة وطريقة طهي توارثتها الأجيال.
+    <div class="hero-badge">🇵🇸 &nbsp;تراث من كل مدينة &nbsp;🇵🇸</div>
+    <h1>اطبخ<br><span>طبقك الفلسطيني</span></h1>
+    <p class="hero-sub">
+      رحلة في أعماق التراث الفلسطيني — طبخ بأيديك، قصص بقلبك، ونكهات من قدس ونابلس والخليل وكل مدينة فلسطينية عريقة
     </p>
-    <p class="about-text">
-      يُفتح أبوابنا كل يوم خميس لتجربة فريدة من نوعها: "اطبخ طبقك الفلسطيني" — حيث تصبح أنت الشيف، بإشراف مباشر وقصة تراثية حقيقية.
-    </p>
-  </div>
-  <div class="about-visual">
-    <div class="about-frame">🫕</div>
-    <div class="about-badge">
-      <span class="num">٢٠٠+</span>
-      وصفة تراثية
+    <div class="hero-cta">
+      <a href="#booking" class="btn-primary">احجز تجربتك الآن</a>
+      <a href="#packages" class="btn-outline">استكشف الباقات</a>
     </div>
   </div>
-</section>
+  <div class="scroll-hint">اكتشف المزيد</div>
+</div>
 
-<!-- EXPERIENCE -->
-<section class="experience" id="experience">
-  <div class="experience-header">
-    <span class="section-tag">كل خميس</span>
-    <h2 class="section-title">اطبخ طبقك<br><span>الفلسطيني</span></h2>
-    <div class="section-divider"></div>
-    <p style="font-size:1rem;color:rgba(42,33,24,0.7);line-height:1.8;">اختر باقتك، احجز مكانك، وابدأ رحلتك في مطبخ التراث الفلسطيني مع إشراف مباشر من شيفاتنا المتخصصين.</p>
-  </div>
-
-  <div class="packages">
-
-    <!-- BASIC -->
-    <div class="package-card">
-      <div class="package-header">
-        <span class="package-icon">🍲</span>
-        <div class="package-name">الباقة الأساسية</div>
-        <div class="package-sub">للفرد — تجربة فردية كاملة</div>
-      </div>
-      <div class="package-price">
-        <div>
-          <span class="price-currency">₪</span>
-          <span class="price-amount">85</span>
-        </div>
-        <span class="price-per">للشخص الواحد</span>
-      </div>
-      <div class="package-body">
-        <div class="package-duration">⏱ مدة التجربة: ساعتان</div>
-        <ul class="package-features">
-          <li>رسوم الدخول والمواد الخام</li>
-          <li>إشراف مباشر من شيف متخصص</li>
-          <li>طبق واحد من قائمة محددة مسبقاً</li>
-          <li>وصفة مكتوبة هدية</li>
-          <li>معايير نظافة وسلامة غذائية كاملة</li>
-        </ul>
-        <button class="btn-book" onclick="document.getElementById('booking').scrollIntoView({behavior:'smooth'})">احجز الآن</button>
-      </div>
-    </div>
-
-    <!-- FAMILY -->
-    <div class="package-card featured">
-      <div class="package-badge-top">الأكثر طلباً</div>
-      <div class="package-header">
-        <span class="package-icon">👨‍👩‍👧‍👦</span>
-        <div class="package-name">الباقة العائلية</div>
-        <div class="package-sub">للعائلة أو مجموعة الأصدقاء</div>
-      </div>
-      <div class="package-price">
-        <div>
-          <span class="price-currency">₪</span>
-          <span class="price-amount">320</span>
-        </div>
-        <span class="price-per">للمجموعة (4–6 أشخاص)</span>
-      </div>
-      <div class="package-body">
-        <div class="package-duration">⏱ مدة التجربة: ٣ ساعات</div>
-        <ul class="package-features">
-          <li>جميع المواد الخام لـ 4-6 أشخاص</li>
-          <li>شيف مخصص للمجموعة</li>
-          <li>طبقان رئيسيان + حلوى تراثية</li>
-          <li>جولة في تراث المدن الفلسطينية</li>
-          <li>تصوير خاص بالتجربة</li>
-          <li>كتيب وصفات هدية للمجموعة</li>
-        </ul>
-        <button class="btn-book" onclick="document.getElementById('booking').scrollIntoView({behavior:'smooth'})">احجز الآن</button>
-      </div>
-    </div>
-
-    <!-- VIP -->
-    <div class="package-card">
-      <div class="package-header">
-        <span class="package-icon">⭐</span>
-        <div class="package-name">باقة VIP</div>
-        <div class="package-sub">تجربة راقية مع قصة تراثية</div>
-      </div>
-      <div class="package-price">
-        <div>
-          <span class="price-currency">₪</span>
-          <span class="price-amount">180</span>
-        </div>
-        <span class="price-per">للشخص — الحد الأقصى ٤ أشخاص</span>
-      </div>
-      <div class="package-body">
-        <div class="package-duration">⏱ مدة التجربة: ٤ ساعات</div>
-        <ul class="package-features">
-          <li>قصة تراثية كاملة عن أصل الطبق والمدينة</li>
-          <li>شيف كبير مخصص حصرياً</li>
-          <li>٣ أطباق تراثية + مشروبات أصيلة</li>
-          <li>مكان مخصص مُزيَّن بالزليج والتراث</li>
-          <li>شهادة "شيف تراثي" باسمك</li>
-          <li>تصوير احترافي للتجربة</li>
-        </ul>
-        <button class="btn-book" onclick="document.getElementById('booking').scrollIntoView({behavior:'smooth'})">احجز الآن</button>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<!-- MENU -->
-<section class="menu" id="menu">
-  <span class="section-tag">قائمة الأطباق</span>
-  <h2 class="section-title">أطباق من <span>قلب فلسطين</span></h2>
-  <div class="section-divider"></div>
-
-  <div class="cities-nav">
-    <button class="city-btn active">الكل</button>
-    <button class="city-btn">نابلس</button>
-    <button class="city-btn">القدس</button>
-    <button class="city-btn">الخليل</button>
-    <button class="city-btn">حيفا</button>
-    <button class="city-btn">غزة</button>
-    <button class="city-btn">الجليل</button>
-    <button class="city-btn">يافا</button>
-  </div>
-
-  <div class="dishes-grid">
-    <div class="dish-card">
-      <div class="dish-img bg-mansaf">🍖<span class="dish-city-tag">الخليل</span></div>
-      <div class="dish-info">
-        <div class="dish-name">المنسف الخليلي</div>
-        <div class="dish-desc">لحم الخروف مع الجميد والأرز المطبوخ بالسمن البلدي</div>
-      </div>
-    </div>
-    <div class="dish-card">
-      <div class="dish-img bg-musakhan">🫓<span class="dish-city-tag">طولكرم</span></div>
-      <div class="dish-info">
-        <div class="dish-name">المسخن الأصيل</div>
-        <div class="dish-desc">الدجاج مع البصل والزيت والسماق على خبز الطابون</div>
-      </div>
-    </div>
-    <div class="dish-card">
-      <div class="dish-img bg-maqlouba">🥘<span class="dish-city-tag">الجليل</span></div>
-      <div class="dish-info">
-        <div class="dish-name">المقلوبة الجليلية</div>
-        <div class="dish-desc">أرز مع خضروات ولحم بهارات خاصة تقلب على الطبق</div>
-      </div>
-    </div>
-    <div class="dish-card">
-      <div class="dish-img bg-knafeh">🍯<span class="dish-city-tag">نابلس</span></div>
-      <div class="dish-info">
-        <div class="dish-name">الكنافة النابلسية</div>
-        <div class="dish-desc">عجين الكنافة مع الجبنة البيضاء والقطر وماء الزهر</div>
-      </div>
-    </div>
-    <div class="dish-card">
-      <div class="dish-img bg-freekeh">🌿<span class="dish-city-tag">القدس</span></div>
-      <div class="dish-info">
-        <div class="dish-name">الفريكة المقدسية</div>
-        <div class="dish-desc">حبوب القمح المحمصة مع الدجاج والبهارات المقدسية</div>
-      </div>
-    </div>
-    <div class="dish-card">
-      <div class="dish-img bg-mujaddara">🫘<span class="dish-city-tag">غزة</span></div>
-      <div class="dish-info">
-        <div class="dish-name">الفول الغزي</div>
-        <div class="dish-desc">فول مدمس بزيت الزيتون والبصل المقلي والبهارات الحارة</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- VIP EXPERIENCE -->
-<section class="vip" id="vip">
-  <div class="vip-pattern"></div>
-  <div class="vip-inner">
-    <div class="vip-content">
-      <span class="section-tag">الباقة المميزة</span>
-      <h2 class="section-title">تجربة <span>VIP</span><br>مع تراث المدينة</h2>
-      <div class="section-divider"></div>
-      <p class="vip-text">
-        ليست مجرد وجبة — بل رحلة عبر التاريخ. في تجربة VIP، يحكي لك شيفنا الكبير قصة كل طبق وأصله، والمدينة الفلسطينية التي ينتمي إليها، قبل أن تبدأ طهيه بيدك.
+<!-- ──── ABOUT ──── -->
+<section id="about">
+  <div class="about-grid">
+    <div>
+      <div class="section-label">من نحن</div>
+      <h2 class="section-title">مطعم يروي قصة أرض</h2>
+      <p class="section-desc">
+        نقدم تجربة طعام تراثية فريدة — يجلس فيها الزبون كشيف رئيسي، يطهو بيده أطباقاً أصيلة من مدن فلسطينية مختلفة، بإشراف مباشر من شيف متخصص ومع قصة تاريخية تجعل كل لقمة لها معنى.
       </p>
-      <div class="vip-features">
-        <div class="vip-feature">
-          <div class="vip-feature-icon">📖</div>
-          <div class="vip-feature-text">
-            <div class="vip-feature-title">قصة تراثية موثقة</div>
-            <div class="vip-feature-desc">تاريخ الطبق، أصوله، والمدينة الفلسطينية المرتبطة به</div>
-          </div>
+      <div class="divider"><span>✦</span></div>
+      <p class="section-desc">
+        يوم واحد في الأسبوع مخصص لتجربة الطبخ التراثي — بحجز مسبق لضمان أفضل تجربة — مع قائمة أطباق محددة مسبقاً ومعايير نظافة وسلامة غذائية صارمة.
+      </p>
+      <div class="stat-chips">
+        <div class="chip">
+          <div class="chip-num">+10</div>
+          <div class="chip-text">مدن فلسطينية<br>نمثل تراثها</div>
         </div>
-        <div class="vip-feature">
-          <div class="vip-feature-icon">👨‍🍳</div>
-          <div class="vip-feature-text">
-            <div class="vip-feature-title">شيف كبير مخصص</div>
-            <div class="vip-feature-desc">إشراف فردي من خبير بالمطبخ الفلسطيني الأصيل</div>
-          </div>
+        <div class="chip">
+          <div class="chip-num">25+</div>
+          <div class="chip-text">طبقاً تراثياً أصيلاً<br>في قائمتنا</div>
         </div>
-        <div class="vip-feature">
-          <div class="vip-feature-icon">⏱</div>
-          <div class="vip-feature-text">
-            <div class="vip-feature-title">زمن مخصص للمجموعة</div>
-            <div class="vip-feature-desc">٤ ساعات كاملة في مكان خاص ومُزيَّن بالتراث</div>
-          </div>
-        </div>
-        <div class="vip-feature">
-          <div class="vip-feature-icon">🎖</div>
-          <div class="vip-feature-text">
-            <div class="vip-feature-title">شهادة شيف تراثي</div>
-            <div class="vip-feature-desc">شهادة باسمك تُثبت إتقانك لطبق من التراث الفلسطيني</div>
-          </div>
+        <div class="chip">
+          <div class="chip-num">3</div>
+          <div class="chip-text">باقات مصممة<br>لكل الأذواق</div>
         </div>
       </div>
-      <a href="#booking" class="btn-primary">احجز تجربة VIP</a>
     </div>
-    <div class="vip-visual">
-      <div class="vip-emblem">
-        <div class="vip-emblem-inner">
-          تجربة<br>VIP<br>فلسطينية<br>أصيلة
-        </div>
+    <div class="about-visual" style="display:flex;justify-content:center;">
+      <div class="olive-branch-ring">
+        <span class="center-icon">🫒</span>
       </div>
     </div>
   </div>
 </section>
 
-<!-- SAFETY -->
-<section class="safety">
-  <span class="section-tag">الجودة والسلامة</span>
-  <h2 class="section-title">معايير <span style="color:var(--gold-light)">السلامة الغذائية</span></h2>
-  <div class="section-divider"></div>
-  <p style="font-size:0.95rem;color:rgba(245,237,216,0.75);max-width:500px;margin:0 auto;line-height:1.8;">نلتزم بأعلى معايير النظافة والسلامة الغذائية لضمان تجربة آمنة وممتعة لكل زبائننا</p>
+<!-- ──── PACKAGES ──── -->
+<div class="section-full" id="packages">
+  <div class="section-inner">
+    <div class="section-label">اختر تجربتك</div>
+    <h2 class="section-title">الباقات المتاحة</h2>
+    <p class="section-desc">كل باقة مصممة لتمنحك تجربة مختلفة وعميقة مع التراث الفلسطيني</p>
+
+    <div class="packages-grid">
+
+      <!-- Basic -->
+      <div class="pkg-card">
+        <div class="pkg-icon">🍽️</div>
+        <div class="pkg-name">الباقة الأساسية</div>
+        <div class="pkg-price">تجربة فردية</div>
+        <p class="pkg-desc">للزبون الفرد الذي يريد تجربة الطبخ التراثي بشكل شخصي ومركّز مع إشراف مباشر من الشيف.</p>
+        <ul class="pkg-features">
+          <li>طبق واحد تختاره من القائمة</li>
+          <li>جميع المكونات الطازجة مشمولة</li>
+          <li>إشراف مباشر من شيف متخصص</li>
+          <li>شرح قصير عن أصل الطبق</li>
+          <li>مدة ٩٠ دقيقة</li>
+          <li>مشروب ترحيبي بالقهوة العربية</li>
+        </ul>
+      </div>
+
+      <!-- Family (Featured) -->
+      <div class="pkg-card featured">
+        <div class="pkg-icon">👨‍👩‍👧‍👦</div>
+        <div class="pkg-name">الباقة العائلية</div>
+        <div class="pkg-price">٤ – ٦ أشخاص</div>
+        <p class="pkg-desc">تجربة جماعية لعائلة أو مجموعة أصدقاء — تطهون معاً طبقاً كبيراً أصيلاً وتتشاركون قصة مدينة فلسطينية.</p>
+        <ul class="pkg-features">
+          <li>طبقان رئيسيان + طبق جانبي</li>
+          <li>جميع المكونات مشمولة للمجموعة</li>
+          <li>شيف مخصص لمجموعتكم طوال الوقت</li>
+          <li>مائدة تراثية فلسطينية للتقديم</li>
+          <li>مدة ٢ – ٢.٥ ساعة</li>
+          <li>مشروبات تراثية باردة وساخنة</li>
+          <li>تصوير تذكاري للمجموعة</li>
+        </ul>
+      </div>
+
+      <!-- VIP -->
+      <div class="pkg-card">
+        <div class="pkg-icon">👑</div>
+        <div class="pkg-name">الباقة الـ VIP</div>
+        <div class="pkg-price">تجربة استثنائية</div>
+        <p class="pkg-desc">رحلة عميقة في التراث — مع قصة مفصّلة عن تاريخ الطبق والمدينة التي ينتمي إليها، وتجربة طبخ فاخرة لا تُنسى.</p>
+        <ul class="pkg-features">
+          <li>٣ أطباق من مدن مختلفة</li>
+          <li>مواد خام فاخرة وطازجة 100%</li>
+          <li>شيف رئيسي + مساعد مخصص</li>
+          <li>قصة تراثية مصورة ومطبوعة عن كل مدينة</li>
+          <li>مدة ٣ – ٤ ساعات</li>
+          <li>قائمة مشروبات تراثية كاملة</li>
+          <li>جلسة خاصة معزولة للمجموعة</li>
+          <li>هدية تراثية فلسطينية للذكرى</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ──── MENU ──── -->
+<section id="menu">
+  <div class="section-label">قائمة الأطباق</div>
+  <h2 class="section-title">أطباق من كل مدينة</h2>
+  <p class="section-desc">تصفّح قائمتنا المصنّفة حسب نوع الطبق أو المدينة الفلسطينية التي ينتمي إليها</p>
+
+  <div class="menu-tabs" style="margin-top:2rem;">
+    <button class="tab-btn active" onclick="filterMenu('all', this)">الكل</button>
+    <button class="tab-btn" onclick="filterMenu('main', this)">الأطباق الرئيسية</button>
+    <button class="tab-btn" onclick="filterMenu('side', this)">الأطباق الجانبية</button>
+    <button class="tab-btn" onclick="filterMenu('dessert', this)">الحلويات</button>
+    <button class="tab-btn" onclick="filterMenu('drink', this)">المشروبات</button>
+  </div>
+
+  <div class="menu-grid" id="menuGrid">
+
+    <!-- Main Dishes -->
+    <div class="dish-card" data-cat="main">
+      <div class="dish-city">نابلس / رام الله</div>
+      <div class="dish-name-ar">مسخّن</div>
+      <div class="dish-name-en">Musakhan</div>
+      <div class="dish-desc">الطبق الوطني الفلسطيني — دجاج مطبوخ بزيت الزيتون والبصل والبهارات على خبز الطابون</div>
+    </div>
+
+    <div class="dish-card" data-cat="main">
+      <div class="dish-city">فلسطين — القدس</div>
+      <div class="dish-name-ar">مقلوبة</div>
+      <div class="dish-name-en">Maqluba</div>
+      <div class="dish-desc">أرز مقلوب بالخضار واللحم — طبق الأفراح والجمعة في كل بيت فلسطيني</div>
+    </div>
+
+    <div class="dish-card" data-cat="main">
+      <div class="dish-city">الخليل</div>
+      <div class="dish-name-ar">قدرة خليلية</div>
+      <div class="dish-name-en">Qidra Khaliliya</div>
+      <div class="dish-desc">أرز ولحم مطبوخ في قِدرة فخارية بالتنور — من أعرق أطباق الخليل</div>
+    </div>
+
+    <div class="dish-card" data-cat="main">
+      <div class="dish-city">رام الله / نابلس</div>
+      <div class="dish-name-ar">مفتول فلسطيني</div>
+      <div class="dish-name-en">Palestinian Maftoul</div>
+      <div class="dish-desc">حبوب مفتول بيدي اليد من الطحين والسميد — تُقدم مع مرق الدجاج والحمص</div>
+    </div>
+
+    <div class="dish-card" data-cat="main">
+      <div class="dish-city">بيت لحم</div>
+      <div class="dish-name-ar">عكوب بلبن</div>
+      <div class="dish-name-en">Akoub in Yogurt</div>
+      <div class="dish-desc">نبات العكوب البري مطبوخ باللبن — من أندر أطباق فلسطين الشتوية</div>
+    </div>
+
+    <div class="dish-card" data-cat="main">
+      <div class="dish-city">فلسطين</div>
+      <div class="dish-name-ar">شيش برك</div>
+      <div class="dish-name-en">Shish Barak</div>
+      <div class="dish-desc">مراقيد اللحم الصغيرة مطبوخة باللبن — طبق شتوي دافئ من التراث الشامي الفلسطيني</div>
+    </div>
+
+    <div class="dish-card" data-cat="main">
+      <div class="dish-city">غزة</div>
+      <div class="dish-name-ar">فتة غزاوية</div>
+      <div class="dish-name-en">Gazan Fatteh</div>
+      <div class="dish-desc">خبز محمص مع الحمص واللبن والثوم — بنكهة غزاوية مميزة بالكمون</div>
+    </div>
+
+    <div class="dish-card" data-cat="main">
+      <div class="dish-city">فلسطين</div>
+      <div class="dish-name-ar">دوالي ومحاشي</div>
+      <div class="dish-name-en">Stuffed Vine Leaves</div>
+      <div class="dish-desc">أوراق عنب محشوة بالأرز واللحم والتوابل — صنعة يدوية تراثية أصيلة</div>
+    </div>
+
+    <!-- Side Dishes -->
+    <div class="dish-card" data-cat="side">
+      <div class="dish-city">فلسطين</div>
+      <div class="dish-name-ar">فريكة بالدجاج</div>
+      <div class="dish-name-en">Freekeh with Chicken</div>
+      <div class="dish-desc">حبوب القمح الأخضر المدخن مع الدجاج والبهارات الفلسطينية</div>
+    </div>
+
+    <div class="dish-card" data-cat="side">
+      <div class="dish-city">فلسطين</div>
+      <div class="dish-name-ar">بطاطا بزيت الزيتون</div>
+      <div class="dish-name-en">Oven Potatoes with Olive Oil</div>
+      <div class="dish-desc">بطاطا مشوية بالفرن بزيت الزيتون البكر المعصور حديثاً</div>
+    </div>
+
+    <div class="dish-card" data-cat="side">
+      <div class="dish-city">فلسطين</div>
+      <div class="dish-name-ar">يقطين مطبوخ</div>
+      <div class="dish-name-en">Cooked Pumpkin (قرع)</div>
+      <div class="dish-desc">قرع مطبوخ بالطماطم والبهارات — طبق شعبي تراثي</div>
+    </div>
+
+    <div class="dish-card" data-cat="side">
+      <div class="dish-city">فلسطين</div>
+      <div class="dish-name-ar">رقاقة</div>
+      <div class="dish-name-en">Rqaqa</div>
+      <div class="dish-desc">عجينة رقيقة مطبوخة بالمرق والخضار — من أطباق الموروث الفلسطيني</div>
+    </div>
+
+    <div class="dish-card" data-cat="side">
+      <div class="dish-city">فلسطين</div>
+      <div class="dish-name-ar">لوف</div>
+      <div class="dish-name-en">Loaf Bread</div>
+      <div class="dish-desc">خبز التنور الفلسطيني المحلي — يُقدم طازجاً مع كل وجبة</div>
+    </div>
+
+    <!-- Desserts -->
+    <div class="dish-card" data-cat="dessert">
+      <div class="dish-city">نابلس</div>
+      <div class="dish-name-ar">كنافة نابلسية</div>
+      <div class="dish-name-en">Nabulsi Knafeh</div>
+      <div class="dish-desc">ملكة الحلويات الفلسطينية — جبنة نابلسية بالقطر والفستق والعجينة الذهبية</div>
+    </div>
+
+    <div class="dish-card" data-cat="dessert">
+      <div class="dish-city">فلسطين</div>
+      <div class="dish-name-ar">قطايف</div>
+      <div class="dish-name-en">Qatayef</div>
+      <div class="dish-desc">فطائر رمضانية محشوة بالجوز والقشطة — حلوى الموسم التراثية</div>
+    </div>
+
+    <div class="dish-card" data-cat="dessert">
+      <div class="dish-city">فلسطين</div>
+      <div class="dish-name-ar">معمول</div>
+      <div class="dish-name-en">Maamoul</div>
+      <div class="dish-desc">بسكويت السميد المحشو بالتمر أو الجوز — حلوى الأعياد الفلسطينية</div>
+    </div>
+
+    <div class="dish-card" data-cat="dessert">
+      <div class="dish-city">فلسطين</div>
+      <div class="dish-name-ar">رز بحليب</div>
+      <div class="dish-name-en">Rice Pudding</div>
+      <div class="dish-desc">أرز بالحليب والسكر بنكهة ماء الورد — حلوى خفيفة وراقية</div>
+    </div>
+
+    <div class="dish-card" data-cat="dessert">
+      <div class="dish-city">فلسطين</div>
+      <div class="dish-name-ar">كلاج باللوز</div>
+      <div class="dish-name-en">Kallaj with Almonds</div>
+      <div class="dish-desc">فطير محشو باللوز والقشطة — من أندر حلويات التراث الفلسطيني</div>
+    </div>
+
+    <div class="dish-card" data-cat="dessert">
+      <div class="dish-city">فلسطين</div>
+      <div class="dish-name-ar">يانسونية</div>
+      <div class="dish-name-en">Yansouniya</div>
+      <div class="dish-desc">كعك اليانسون الفلسطيني — من ذكريات الجدات في كل بيت</div>
+    </div>
+
+    <div class="dish-card" data-cat="dessert">
+      <div class="dish-city">فلسطين</div>
+      <div class="dish-name-ar">هريسة</div>
+      <div class="dish-name-en">Hareeseh</div>
+      <div class="dish-desc">كعكة السميد بالقطر — حلوى شعبية مقدمة بالقشطة</div>
+    </div>
+
+    <!-- Drinks -->
+    <div class="dish-card" data-cat="drink">
+      <div class="dish-city">المشروبات</div>
+      <div class="dish-name-ar">قهوة عربية</div>
+      <div class="dish-name-en">Arabic Coffee</div>
+      <div class="dish-desc">قهوة بالهيل والزعفران — ترحيب فلسطيني أصيل في كل جلسة</div>
+    </div>
+
+    <div class="dish-card" data-cat="drink">
+      <div class="dish-city">المشروبات</div>
+      <div class="dish-name-ar">شاي بالميرمية</div>
+      <div class="dish-name-en">Sage Tea</div>
+      <div class="dish-desc">شاي الميرمية العطري من جبال فلسطين — يُشعل الذاكرة</div>
+    </div>
+
+    <div class="dish-card" data-cat="drink">
+      <div class="dish-city">المشروبات</div>
+      <div class="dish-name-ar">تمر هندي</div>
+      <div class="dish-name-en">Tamarind Juice</div>
+      <div class="dish-desc">عصير التمر الهندي المنعش — مشروب الصيف التراثي</div>
+    </div>
+
+    <div class="dish-card" data-cat="drink">
+      <div class="dish-city">المشروبات</div>
+      <div class="dish-name-ar">خروب</div>
+      <div class="dish-name-en">Carob Juice</div>
+      <div class="dish-desc">عصير الخروب الطبيعي — من أشجار الجبال الفلسطينية</div>
+    </div>
+
+    <div class="dish-card" data-cat="drink">
+      <div class="dish-city">المشروبات</div>
+      <div class="dish-name-ar">عرق سوس</div>
+      <div class="dish-name-en">Licorice Drink</div>
+      <div class="dish-desc">شراب العرق سوس المبرد — مشروب تراثي من أسواق القدس</div>
+    </div>
+
+    <div class="dish-card" data-cat="drink">
+      <div class="dish-city">المشروبات</div>
+      <div class="dish-name-ar">سحلب</div>
+      <div class="dish-name-en">Sahlab</div>
+      <div class="dish-desc">شراب السحلب الدافئ بالحليب والقرفة — لهواء الشتاء الفلسطيني</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ──── EXPERIENCE FLOW ──── -->
+<div class="section-full" id="experience">
+  <div class="section-inner">
+    <div class="section-label">رحلتك معنا</div>
+    <h2 class="section-title">جدول يوم الطبخ التراثي</h2>
+    <p class="section-desc">كل جلسة مصممة بعناية — من لحظة وصولك حتى آخر لقمة</p>
+
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-content">
+          <div class="tl-title">🫖 الاستقبال والترحيب</div>
+          <p class="tl-desc">تُستقبل بقهوة عربية أصيلة وجلسة ترحيبية تتعرف فيها على الشيف المشرف، وتختار طبقك من القائمة المحددة، وتسمع قصة قصيرة عن المدينة التي ينتمي إليها الطبق.</p>
+        </div>
+        <div class="tl-time">٠:٠٠ – ٠:٢٠<br>دقيقة</div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-content">
+          <div class="tl-title">📖 القصة التراثية</div>
+          <p class="tl-desc">الشيف يأخذك في رحلة قصيرة — تعرف فيها تاريخ الطبق، من أين جاء، لماذا ارتبط بهذه المدينة، وأي مناسبات تراثية يُعد فيها. في باقة VIP تكون القصة مصورة ومطبوعة هدية لك.</p>
+        </div>
+        <div class="tl-time">٠:٢٠ – ٠:٤٠<br>دقيقة</div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-content">
+          <div class="tl-title">🔪 التحضير والطبخ</div>
+          <p class="tl-desc">البطولة الحقيقية — تمسك بالملعقة وتبدأ الطبخ بإشراف ومتابعة مستمرة من الشيف. كل المكونات محضّرة وطازجة بالكميات المناسبة. نظافة وسلامة غذائية مضمونة في كل خطوة.</p>
+        </div>
+        <div class="tl-time">٠:٤٠ – ١:٤٠<br>ساعة</div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-content">
+          <div class="tl-title">🍽️ التقديم والتذوق</div>
+          <p class="tl-desc">طبقك جاهز — يُقدَّم على مائدة تراثية فلسطينية مع مشروب مكمّل واختيار من المقبلات. تتذوق ما طهوته بيديك وتشاركه مع من معك في جو من الدفء والانتماء.</p>
+        </div>
+        <div class="tl-time">١:٤٠ – ٢:١٠<br>ساعة</div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-content">
+          <div class="tl-title">📸 الختام والذكرى</div>
+          <p class="tl-desc">تصوير تذكاري مع الشيف وطبقك، واستلام شهادة طاهٍ تراثي فلسطيني — هدية صغيرة تذكّرك بهذا اليوم.</p>
+        </div>
+        <div class="tl-time">٢:١٠ – ٢:٣٠<br>ساعة</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ──── SAFETY ──── -->
+<section>
+  <div class="section-label">الجودة والسلامة</div>
+  <h2 class="section-title">معاييرنا لا تُساوم</h2>
+  <p class="section-desc">نلتزم بأعلى معايير السلامة الغذائية والنظافة لضمان تجربة آمنة وصحية لكل زبون</p>
 
   <div class="safety-grid">
-    <div class="safety-item">
+    <div class="safety-card">
       <div class="safety-icon">🧼</div>
-      <div class="safety-label">معدات معقمة ومغسولة<br>قبل كل جلسة</div>
+      <div class="safety-title">نظافة تامة</div>
+      <p class="safety-text">تعقيم كامل للمعدات والمطبخ قبل كل جلسة وبعدها مع أدوات موثقة لكل مجموعة</p>
     </div>
-    <div class="safety-item">
-      <div class="safety-icon">🧤</div>
-      <div class="safety-label">قفازات وأدوات وقاية<br>للجميع</div>
+    <div class="safety-card">
+      <div class="safety-icon">🌿</div>
+      <div class="safety-title">مكونات طازجة</div>
+      <p class="safety-text">مواد خام طازجة ومحلية الأصل — نتعامل مع موردين موثوقين لضمان أعلى جودة</p>
     </div>
-    <div class="safety-item">
-      <div class="safety-icon">🌡</div>
-      <div class="safety-label">مراقبة درجات الحرارة<br>والطهي الآمن</div>
+    <div class="safety-card">
+      <div class="safety-icon">👨‍🍳</div>
+      <div class="safety-title">إشراف متخصص</div>
+      <p class="safety-text">شيف مدرّب ومتخصص بالطبخ التراثي الفلسطيني يرافق مجموعتك طوال الجلسة</p>
     </div>
-    <div class="safety-item">
-      <div class="safety-icon">📋</div>
-      <div class="safety-label">شهادات صحية معتمدة<br>لكل الشيفات</div>
+    <div class="safety-card">
+      <div class="safety-icon">⏱️</div>
+      <div class="safety-title">وقت محدد للمجموعة</div>
+      <p class="safety-text">حجز مسبق بوقت محدد لكل مجموعة — لا اكتظاظ ولا تداخل بين الجلسات</p>
     </div>
   </div>
 </section>
 
-<!-- BOOKING -->
-<section class="booking" id="booking">
-  <div class="booking-info">
-    <span class="section-tag">الحجز المسبق</span>
-    <h2 class="section-title">احجز<br><span>تجربتك</span></h2>
-    <div class="section-divider"></div>
-    <p style="font-size:0.95rem;color:rgba(42,33,24,0.65);line-height:1.8;margin-bottom:36px;">الجلسات محدودة كل خميس — نوصيك بالحجز مبكراً لضمان مكانك في التجربة المناسبة لك.</p>
+<!-- ──── BOOKING ──── -->
+<div class="section-full" id="booking">
+  <div class="section-inner">
+    <div class="section-label">تواصل معنا</div>
+    <h2 class="section-title">احجز تجربتك الآن</h2>
 
-    <div class="booking-steps">
-      <div class="step">
-        <div class="step-num">١</div>
-        <div class="step-content">
-          <div class="step-title">اختر باقتك</div>
-          <div class="step-desc">فردية، عائلية أو VIP — كل باقة بمواصفاتها الخاصة</div>
-        </div>
+    <div class="booking-wrap" style="margin-top:3rem;">
+      <div class="booking-info">
+        <h3>يوم الطبخ التراثي — كل أسبوع</h3>
+        <p>
+          يُخصص يوم واحد في الأسبوع لتجربة الطبخ التراثي. الحجز مسبق وضروري لضمان مكانك وتحضير المكونات الطازجة لطبقك.
+        </p>
+        <p>
+          يُنصح بالحجز قبل ٤٨ ساعة على الأقل. عدد المجموعات محدود في اليوم الواحد لضمان جودة التجربة.
+        </p>
+        <ul class="contact-list">
+          <li><span class="icon">📍</span> فلسطين — نابلس</li>
+          <li><span class="icon">📞</span> للتواصل والاستفسار: اتصل أو واتساب</li>
+          <li><span class="icon">🕐</span> يوم الطبخ: الجمعة</li>
+          <li><span class="icon">🕐</span> ساعات العمل: ١٠ ص – ٩ م</li>
+          <li><span class="icon">✉️</span> info@tabkhtabakak.ps</li>
+        </ul>
       </div>
-      <div class="step">
-        <div class="step-num">٢</div>
-        <div class="step-content">
-          <div class="step-title">اختر طبقك</div>
-          <div class="step-desc">من قائمة أطباقنا التراثية المحددة مسبقاً</div>
+
+      <div class="form-box">
+        <div id="bookingForm">
+          <div class="form-row">
+            <div class="form-group">
+              <label>الاسم الكامل</label>
+              <input type="text" id="name" placeholder="اسمك الكريم">
+            </div>
+            <div class="form-group">
+              <label>رقم الهاتف</label>
+              <input type="tel" id="phone" placeholder="05x-xxxxxxx">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>الباقة المطلوبة</label>
+            <select id="package">
+              <option value="">اختر الباقة...</option>
+              <option>الباقة الأساسية – فردي</option>
+              <option>الباقة العائلية – ٤ إلى ٦ أشخاص</option>
+              <option>الباقة VIP – تجربة استثنائية</option>
+            </select>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>التاريخ المطلوب</label>
+              <input type="date" id="date">
+            </div>
+            <div class="form-group">
+              <label>عدد الأشخاص</label>
+              <input type="number" id="count" min="1" max="10" placeholder="١">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>الطبق المفضل</label>
+            <select id="dish">
+              <option value="">اختر الطبق...</option>
+              <option>مسخّن</option>
+              <option>مقلوبة</option>
+              <option>قدرة خليلية</option>
+              <option>مفتول فلسطيني</option>
+              <option>عكوب بلبن</option>
+              <option>شيش برك</option>
+              <option>فتة غزاوية</option>
+              <option>دوالي ومحاشي</option>
+              <option>فريكة بالدجاج</option>
+              <option>أحتاج مساعدة في الاختيار</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>ملاحظات خاصة (اختياري)</label>
+            <textarea id="notes" placeholder="حساسية غذائية، مناسبة خاصة، طلبات معينة..."></textarea>
+          </div>
+
+          <button class="form-submit" onclick="submitBooking()">إرسال طلب الحجز ✦</button>
         </div>
-      </div>
-      <div class="step">
-        <div class="step-num">٣</div>
-        <div class="step-content">
-          <div class="step-title">أكّد الحجز</div>
-          <div class="step-desc">دفع مقدم بسيط لتأكيد مكانك — والباقي عند الحضور</div>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">٤</div>
-        <div class="step-content">
-          <div class="step-title">تعال واستمتع</div>
-          <div class="step-desc">كل شيء جاهز لك — المكونات، الشيف، والتراث</div>
+
+        <div class="success-msg" id="successMsg">
+          🌿 تم استلام طلب حجزك بنجاح!<br><br>
+          <span style="font-size:1rem;font-family:'Tajawal',sans-serif;font-weight:300;color:var(--cream-dark)">
+            سنتواصل معك في أقرب وقت لتأكيد الحجز.<br>
+            يسعدنا استضافتك في رحلتك التراثية الفلسطينية 🫒
+          </span>
         </div>
       </div>
     </div>
   </div>
+</div>
 
-  <div class="booking-form">
-    <div class="form-title">نموذج الحجز</div>
-
-    <div class="form-row">
-      <div class="form-group">
-        <label class="form-label">الاسم الكامل</label>
-        <input type="text" class="form-control" placeholder="أدخل اسمك">
-      </div>
-      <div class="form-group">
-        <label class="form-label">رقم الهاتف</label>
-        <input type="tel" class="form-control" placeholder="05X-XXXXXXX">
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label class="form-label">البريد الإلكتروني</label>
-      <input type="email" class="form-control" placeholder="example@email.com">
-    </div>
-
-    <div class="form-group">
-      <label class="form-label">اختر الباقة</label>
-      <select class="form-control">
-        <option value="">-- اختر باقتك --</option>
-        <option>الباقة الأساسية — ₪85 للشخص</option>
-        <option>الباقة العائلية — ₪320 للمجموعة (4-6 أشخاص)</option>
-        <option>باقة VIP — ₪180 للشخص</option>
-      </select>
-    </div>
-
-    <div class="form-row">
-      <div class="form-group">
-        <label class="form-label">تاريخ الجلسة (خميس)</label>
-        <input type="date" class="form-control">
-      </div>
-      <div class="form-group">
-        <label class="form-label">عدد الأشخاص</label>
-        <select class="form-control">
-          <option>1</option>
-          <option>2</option>
-          <option>3</option>
-          <option>4</option>
-          <option>5</option>
-          <option>6</option>
-        </select>
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label class="form-label">اختر الطبق</label>
-      <select class="form-control">
-        <option value="">-- اختر طبقك التراثي --</option>
-        <option>المنسف الخليلي</option>
-        <option>المسخن الأصيل</option>
-        <option>المقلوبة الجليلية</option>
-        <option>الكنافة النابلسية</option>
-        <option>الفريكة المقدسية</option>
-        <option>الفول الغزي</option>
-      </select>
-    </div>
-
-    <div class="form-group">
-      <label class="form-label">ملاحظات إضافية</label>
-      <textarea class="form-control" rows="3" placeholder="حساسية طعام، مناسبة خاصة..."></textarea>
-    </div>
-
-    <button class="form-submit">تأكيد الحجز ✦</button>
-  </div>
-</section>
-
-<!-- FOOTER -->
+<!-- ──── FOOTER ──── -->
 <footer>
-  <div class="footer-top">
-    <div>
-      <div class="footer-logo">اطبخ طبقك الفلسطيني</div>
-      <p class="footer-tagline">نحافظ على تراث فلسطين بنكهاتها الأصيلة — من كل مدينة، لكل مائدة، لكل جيل.</p>
-    </div>
-    <div>
-      <div class="footer-col-title">روابط سريعة</div>
-      <ul class="footer-links">
-        <li><a href="#about">عن المطعم</a></li>
-        <li><a href="#experience">اطبخ طبقك</a></li>
-        <li><a href="#menu">قائمة الأطباق</a></li>
-        <li><a href="#vip">تجربة VIP</a></li>
-        <li><a href="#booking">احجز الآن</a></li>
-      </ul>
-    </div>
-    <div>
-      <div class="footer-col-title">تواصل معنا</div>
-      <ul class="footer-links">
-        <li><a href="#">📞 059-XXXXXXX</a></li>
-        <li><a href="#">📧 <span class="__cf_email__" data-cfemail="6e070008012e030f1f0f03401e1d">[email&#160;protected]</span></a></li>
-        <li><a href="#">📍 نابلس، فلسطين</a></li>
-        <li><a href="#">كل خميس | 10ص — 10م</a></li>
-      </ul>
-    </div>
-  </div>
-  <div class="footer-bottom">
-    <span>© 2024 اطبخ طبقك الفلسطيني — جميع الحقوق محفوظة</span>
-    <span>صُنع بـ ♥ لفلسطين</span>
-  </div>
+  <div class="logo">🫒 اطبخ طبقك الفلسطيني 🫒</div>
+  <div class="divider" style="max-width:300px;margin:1rem auto;"><span>✦</span></div>
+  <p>مطعم تراثي فلسطيني — من كل مدينة طبق، ومن كل طبق قصة</p>
+  <p style="margin-top:0.5rem;">فلسطين — نابلس &nbsp;|&nbsp; يوم الطبخ كل جمعة</p>
+  <p style="margin-top:1.5rem; font-size:0.75rem;">© ٢٠٢٥ اطبخ طبقك الفلسطيني — جميع الحقوق محفوظة</p>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-  // City filter buttons
-  const cityBtns = document.querySelectorAll('.city-btn');
-  cityBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      cityBtns.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-    });
-  });
-
-  // Smooth scroll for nav
-  document.querySelectorAll('a[href^="#"]').forEach(a => {
-    a.addEventListener('click', e => {
-      const target = document.querySelector(a.getAttribute('href'));
-      if (target) {
-        e.preventDefault();
-        target.scrollIntoView({ behavior: 'smooth' });
+<script>
+  function filterMenu(cat, btn) {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.dish-card').forEach(card => {
+      if (cat === 'all' || card.dataset.cat === cat) {
+        card.style.display = '';
+      } else {
+        card.style.display = 'none';
       }
     });
-  });
-
-  // Nav background on scroll
-  const nav = document.querySelector('nav');
-  window.addEventListener('scroll', () => {
-    nav.style.background = window.scrollY > 80
-      ? 'rgba(42, 33, 24, 0.98)'
-      : 'rgba(42, 33, 24, 0.92)';
-  });
-
-  // Booking form submit
-  document.querySelector('.form-submit').addEventListener('click', () => {
-    const inputs = document.querySelectorAll('.form-control');
-    let valid = true;
-    inputs.forEach(i => { if (!i.value) valid = false; });
-    if (valid) {
-    alert('✅ تم استلام حجزك! سنتواصل معك قريباً لتأكيد التفاصيل.');
-  } else {
-    alert('يرجى ملء جميع الحقول المطلوبة.');
   }
-});
+
+  function submitBooking() {
+    const name = document.getElementById('name').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+    const pkg = document.getElementById('package').value;
+    const date = document.getElementById('date').value;
+
+    if (!name || !phone || !pkg || !date) {
+      alert('الرجاء تعبئة الحقول الأساسية: الاسم، الهاتف، الباقة، والتاريخ');
+      return;
+    }
+
+    document.getElementById('bookingForm').style.display = 'none';
+    document.getElementById('successMsg').style.display = 'block';
+  }
+
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.pkg-card, .dish-card, .chip, .safety-card, .tl-item').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(20px)';
+    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+    observer.observe(el);
+  });
+</script>
+</body>
+</html>
